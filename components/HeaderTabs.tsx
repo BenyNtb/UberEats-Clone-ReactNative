@@ -1,46 +1,64 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 
-
-
-export default function HeaderTabs(props: { activeTab: any; setActiveTab: any; }) {
-  return (
-    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-        <HeaderButton 
-        text='Delivery'
-        btnColor='black' 
-        textColor='white' 
-        activeTab={props.activeTab}
-        setActiveTab={props.setActiveTab}
-        
-        />
-        <HeaderButton 
-        text='Pickup' 
-        btnColor='white' 
-        textColor='black'
-        activeTab={props.activeTab} 
-        setActiveTab={props.setActiveTab}
-        
-        />
-    </View>
-  )
+interface Props {
+  activeTab: any;
+  setActiveTab: (tab: any) => void;
 }
 
-const HeaderButton = (props: { activeTab:any; setActiveTab:any; text: string | number | boolean; btnColor: string; textColor: string}) => (
-        <TouchableOpacity style={{
-            backgroundColor: props.activeTab === props.text ? 'black' : 'white',
-            paddingVertical: 6,
-            paddingHorizontal: 16,
-            borderRadius: 30,
+export default function HeaderTabs(props: Props) {
+  const {activeTab, setActiveTab} = props;
+
+  return (
+    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+      <HeaderButton
+        text="Delivery"
+        btnColor="black"
+        textColor="white"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+      <HeaderButton
+        text="Pickup"
+        btnColor="white"
+        textColor="black"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+    </View>
+  );
+}
+
+interface HeaderButtonProps {
+  activeTab: any;
+  setActiveTab: (tab: any) => void;
+  text: any;
+  btnColor: any;
+  textColor: any;
+}
+
+const HeaderButton = (props: HeaderButtonProps) => {
+  const {activeTab, setActiveTab, text, btnColor, textColor} = props;
+
+  return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: activeTab === text ? 'black' : 'white',
+        paddingVertical: 6,
+        paddingHorizontal: 16,
+        borderRadius: 30,
+      }}
+      onPress={() => setActiveTab(text)}
+    >
+      <Text
+        style={{
+          color: activeTab === text ? 'white' : 'black',
+          fontSize: 15,
+          fontWeight: '900',
         }}
-        onPress={() => props.setActiveTab?(props.text):null}
-        >
-            <Text style={{
-                color: props.activeTab === props.text ? 'white' : 'black',
-                fontSize: 15,
-                fontWeight: '900'
-            }}>
-                {props.text}
-            </Text>
-        </TouchableOpacity>
-);
+      >
+        {text}
+      </Text>
+    </TouchableOpacity>
+  );
+};
