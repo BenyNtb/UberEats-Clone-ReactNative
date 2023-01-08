@@ -43,11 +43,25 @@ export const localRestaurants = [
 ];
 
 
+interface RestaurantItemProps {
+    restaurantData: Restaurant[];
+  }
+
+  interface Restaurant {
+    name: string;
+    rating: number;
+    categories: string[];
+    price: string;
+    reviews: number;
+    image_url: string;
+  }
+
 export default function RestaurantItems(props: { restaurantData: any[]; }) {
     // console.log(props.restaurantData)
     return (
+        <>
+            {props.restaurantData.map((restaurant: { image_url: any; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; rating: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
         <TouchableOpacity activeOpacity={1} style={{ marginBottom: 30 }}>
-            {props.restaurantData.map((restaurant, index) => (
             <View 
             key={index}
             style={{
@@ -60,9 +74,9 @@ export default function RestaurantItems(props: { restaurantData: any[]; }) {
             rating={restaurant.rating}
             />
             </View>
-            ))}
         </TouchableOpacity>
-        
+            ))}
+        </>
     )
 }
 

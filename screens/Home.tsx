@@ -1,10 +1,11 @@
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { View, Text, SafeAreaView, ScrollView } from 'react-native'
+import { Divider } from 'react-native-elements'
 import HeaderTabs from '../components/HeaderTabs'
 import SearchBar from '../components/SearchBar'
 import Categories from '../components/Categories'
 import RestaurantItems, { localRestaurants } from '../components/RestaurantItems'
-import { FlatList } from 'react-native';
+import BottomTabs from '../components/BottomTabs'
 
 interface HeaderTabsProps {
   activeTab: any;
@@ -32,10 +33,10 @@ const YELP_API_KEY = 'tPhwen_ufjZd9Oz6dn-RqfiJnljcg-_reYl49JJXaIp01F8xkTxJTv6ald
 
 export default function Home() {
   const [restaurantData, setRestaurantData] = useState<Restaurant[]>(localRestaurants);
-  const [city, setCity] = useState('Brussels');
-  // const [activeTab, setActiveTab] = useState('Delivery');
+  const [city, setCity] = useState('New York');
+  const [activeTab, setActiveTab] = useState('Delivery');
   const getRestaurantFromYelp = async () => {
-  const yelpUrl= `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${city}}`;
+  const yelpUrl= `https://api.yelp.com/v3/transactions/delivery/search?location=${city}`;
   const apiOptions = {
     headers: {
       Authorization: `Bearer ${YELP_API_KEY}`,
@@ -43,28 +44,34 @@ export default function Home() {
   };
   return fetch(yelpUrl, apiOptions)
   .then((res) => res.json())
-  .then((json) =>
-    setRestaurantData(
-      json.businesses
+  // .then(response => console.log(response))
+  .then((response) =>
+  setRestaurantData(
+    response.businesses.filter((business: any) =>
+    business.transactions.includes(activeTab.toLowerCase())
     )
-  );
+    )
+    );
   };
+  console.log(city);
 
   useEffect(() => {
     getRestaurantFromYelp();
     
-  }, [city]) //activeTab]);
+  }, [city, activeTab]);
 
   return (
     <SafeAreaView style={{backgroundColor:'#eee', flex: 1}}>
       <View style={{backgroundColor: 'white', padding: 15}}>
-        <HeaderTabs/> 
+        <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <SearchBar cityHandler={setCity}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories />
-        <RestaurantItems restaurantData={restaurantData}/>
+        <RestaurantItems restaurantData={restaurantData} />
       </ScrollView>
+      <Divider width={1}/>
+        <BottomTabs />
     </SafeAreaView>
   )
 }
