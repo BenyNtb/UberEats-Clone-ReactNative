@@ -8,22 +8,21 @@ interface Props {
 
 export default function HeaderTabs(props: Props) {
   const {activeTab, setActiveTab} = props;
-
   return (
     <View style={{flexDirection: 'row', alignSelf: 'center'}}>
       <HeaderButton
         text="Delivery"
         btnColor="black"
         textColor="white"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        activeTab={activeTab}  //{props.activeTab}
+        setActiveTab={setActiveTab}   //{props.setActiveTab} 
       />
       <HeaderButton
         text="Pickup"
         btnColor="white"
         textColor="black"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        activeTab={activeTab} //{props.activeTab}
+        setActiveTab={setActiveTab} //{props.setActiveTab}
       />
     </View>
   );
