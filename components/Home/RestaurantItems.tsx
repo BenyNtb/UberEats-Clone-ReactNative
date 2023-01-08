@@ -104,7 +104,8 @@ const RestaurantInfo = (props: { name: string | number | boolean | React.ReactEl
         justifyContent: 'space-between', 
         alignItems: 'center', 
         marginTop: 10
-        }}>
+        }}
+        >
         <View>
             <Text style={{ 
                 fontSize: 15,
