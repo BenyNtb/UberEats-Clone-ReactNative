@@ -43,28 +43,27 @@ export default function Home({navigation}: {navigation: any}) {
     },
   };
   return fetch(yelpUrl, apiOptions)
-  .then((res) => res.json())
-  // .then(response => console.log(response))
-  .then((response) => {
-    if (response) {
-      setRestaurantData(
-        response.businesses.filter((business: any) =>
-        business.transactions.includes(activeTab.toLowerCase())
+      .then((res) => res.json())
+      .then((json) =>
+        setRestaurantData(
+          json.businesses.filter((business) =>
+            business.transactions.includes(activeTab.toLowerCase())
+          )
         )
       );
-    }
-    
-    
-    console.log(response);
-  });
   };
   // console.log(city);
 
+  // useEffect(() => {
+  //   getRestaurantFromYelp().catch((error) => {
+  //     console.error(error);
+  //   });;
+  // }, [city, activeTab]);
   useEffect(() => {
-    getRestaurantFromYelp().catch((error) => {
-      console.error(error);
-    });;
-    
+    const fetchData = async () => {
+      await getRestaurantFromYelp();
+    };
+    fetchData();
   }, [city, activeTab]);
   // console.log('Restaurant data passed to RestaurantItems:', restaurantData);
   return (

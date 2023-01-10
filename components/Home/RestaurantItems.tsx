@@ -66,12 +66,14 @@ interface RestaurantItemProps {
 
             <TouchableOpacity 
             key={index} 
-            activeOpacity={1} style={{ marginBottom: 30 }} onPress={() => _navigation.navigate('RestaurantDetail')}>
+            activeOpacity={1} 
+            style={{ marginBottom: 30 }} 
+            onPress={() => _navigation.navigate('RestaurantDetail')}>
                 <View 
                 style={{
                 marginTop: 10,
                 padding: 15,
-                backgroundColor: 'white'
+                backgroundColor: 'red'
                 }}>
                 <RestaurantImage image={restaurant.image_url}/>
                 <RestaurantInfo name={restaurant.name} 
