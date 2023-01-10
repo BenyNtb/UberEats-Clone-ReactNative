@@ -1,15 +1,26 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 
-const image= 'https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80';
-const title = 'The Best Burger in Town';
-const description = 'American - Burger - €€ - 🔥 - 5 🔥 (7000+)';
+const yelpRestaurantInfo = {
+  name: 'The Best Burger in Town',
+  image: 'https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+  price: '$$',
+  reviews: 7000,
+  rating: 5,
+  categories: [{title: 'American'}, {title: 'Burger'}],
+};
 
-export default function About() {
+
+
+export default function About({route: {params = yelpRestaurantInfo} }) {
+  const {name, image, price, reviews, rating, categories} = params;
+
+  const formattedCategories = categories.map((cat: { title: any; }) => cat.title).join(' • ');
+  const description = `${formattedCategories}  ${price ? " • " + price : ""} • 🎫 ${rating} ⭐ • ${reviews}+ reviews`;
   return (
     <View>
       <RestaurantImage image={image}/>
-      <RestaurantTitle title={title}/>
+      <RestaurantName name={name}/>
       <RestaurantDescription description={description}/>
     </View>
   )
@@ -24,7 +35,7 @@ const RestaurantImage = (props: { image: any; }) => (
   />
 );
 
-const RestaurantTitle = (props: { title: any; }) => (
+const RestaurantName = (props: { name: any; }) => (
   <Text 
     style={{ 
       fontSize: 29, 
@@ -33,7 +44,7 @@ const RestaurantTitle = (props: { title: any; }) => (
       marginHorizontal: 15
     }}
   >
-    {props.title}
+    {props.name}
   </Text>
 );
 

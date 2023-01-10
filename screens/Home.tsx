@@ -31,7 +31,7 @@ interface RestaurantItemProps {
 
 const YELP_API_KEY = 'tPhwen_ufjZd9Oz6dn-RqfiJnljcg-_reYl49JJXaIp01F8xkTxJTv6ald7dpiL-vAyTNR7EiJn5o7yhjxODuGY7n1Ij4-THXmQCU21j5CUuEEKfnEbkSDlYEdy5Y3Yx';
 
-export default function Home() {
+export default function Home({navigation}: {navigation: any}) {
   const [restaurantData, setRestaurantData] = useState<Restaurant[]>(localRestaurants);
   const [city, setCity] = useState('New York');
   const [activeTab, setActiveTab] = useState('Delivery');
@@ -45,21 +45,28 @@ export default function Home() {
   return fetch(yelpUrl, apiOptions)
   .then((res) => res.json())
   // .then(response => console.log(response))
-  .then((response) =>
-  setRestaurantData(
-    response.businesses.filter((business: any) =>
-    business.transactions.includes(activeTab.toLowerCase())
-    )
-    )
-    );
+  .then((response) => {
+    if (response) {
+      setRestaurantData(
+        response.businesses.filter((business: any) =>
+        business.transactions.includes(activeTab.toLowerCase())
+        )
+      );
+    }
+    
+    
+    console.log(response);
+  });
   };
-  console.log(city);
+  // console.log(city);
 
   useEffect(() => {
-    getRestaurantFromYelp();
+    getRestaurantFromYelp().catch((error) => {
+      console.error(error);
+    });;
     
   }, [city, activeTab]);
-
+  // console.log('Restaurant data passed to RestaurantItems:', restaurantData);
   return (
     <SafeAreaView style={{backgroundColor:'#eee', flex: 1}}>
       <View style={{backgroundColor: 'white', padding: 15}}>
@@ -68,7 +75,7 @@ export default function Home() {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories />
-        <RestaurantItems  restaurantData={restaurantData} />
+        <RestaurantItems  {...{restaurantData,navigation}} />
       </ScrollView>
       <Divider width={1}/>
         <BottomTabs />

@@ -1,6 +1,8 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { NavigationContainer } from '@react-navigation/native';
+
 
 
 export const localRestaurants = [
@@ -56,26 +58,28 @@ interface RestaurantItemProps {
     image_url: string;
   }
 
-export default function RestaurantItems(props: { restaurantData: any[]; }) {
+  export default function RestaurantItems(_navigation: typeof NavigationContainer & typeof NavigationContainer, props: RestaurantItemProps) {
     // console.log(props.restaurantData)
     return (
         <>
-            {props.restaurantData.map((restaurant: { image_url: any; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; rating: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
-        <TouchableOpacity activeOpacity={1} style={{ marginBottom: 30 }}>
-            <View 
-            key={index}
-            style={{
-            marginTop: 10,
-            padding: 15,
-            backgroundColor: 'white'
-            }}>
-            <RestaurantImage image={restaurant.image_url}/>
-            <RestaurantInfo name={restaurant.name} 
-            rating={restaurant.rating}
-            />
-            </View>
-        </TouchableOpacity>
-            ))}
+            {props.restaurantData && props.restaurantData.length > 0 && props.restaurantData.map((restaurant: { image_url: any; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; rating: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+
+            <TouchableOpacity 
+            key={index} 
+            activeOpacity={1} style={{ marginBottom: 30 }} onPress={() => _navigation.navigate('RestaurantDetail')}>
+                <View 
+                style={{
+                marginTop: 10,
+                padding: 15,
+                backgroundColor: 'white'
+                }}>
+                <RestaurantImage image={restaurant.image_url}/>
+                <RestaurantInfo name={restaurant.name} 
+                rating={restaurant.rating}
+                />
+                </View>
+            </TouchableOpacity>
+                ))}
         </>
     )
 }
