@@ -26,7 +26,7 @@ const items = [
     }
 ];
 
-export default function Categories(text: string, image: any,) {
+export default function Categories() {
     return (
         <View
         style={{ marginTop: 5, backgroundColor: 'white', paddingVertical: 10, paddingLeft: 20}}

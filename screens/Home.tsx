@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
-import { Divider } from 'react-native-elements'
-import HeaderTabs from '../components/Home/HeaderTabs'
-import SearchBar from '../components/Home/SearchBar'
-import Categories from '../components/Home/Categories'
-import RestaurantItems, { localRestaurants } from '../components/Home/RestaurantItems'
-import BottomTabs from '../components/Home/BottomTabs'
+import React, { useEffect, useState } from 'react';
+import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import { Divider } from 'react-native-elements';
+import HeaderTabs from '../components/Home/HeaderTabs';
+import SearchBar from '../components/Home/SearchBar';
+import Categories from '../components/Home/Categories';
+import RestaurantItems, { localRestaurants }  from '../components/Home/RestaurantItems';
+
+import BottomTabs from '../components/Home/BottomTabs';
 
 interface HeaderTabsProps {
   activeTab: any;
@@ -46,7 +47,7 @@ export default function Home({navigation}: {navigation: any}) {
       .then((res) => res.json())
       .then((json) =>
         setRestaurantData(
-          json.businesses.filter((business) =>
+          json.businesses.filter((business: { transactions: string | string[] }) =>
             business.transactions.includes(activeTab.toLowerCase())
           )
         )
@@ -66,6 +67,7 @@ export default function Home({navigation}: {navigation: any}) {
     fetchData();
   }, [city, activeTab]);
   // console.log('Restaurant data passed to RestaurantItems:', restaurantData);
+  
   return (
     <SafeAreaView style={{backgroundColor:'#eee', flex: 1}}>
       <View style={{backgroundColor: 'white', padding: 15}}>
