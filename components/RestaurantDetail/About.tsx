@@ -11,23 +11,33 @@ import React from 'react'
 // };
 
 
-// console.log(About)
-export default function About(props: any) {
+
+// interface Props{
+//   name: string;
+//   image: string;
+//   price: string;
+//   reviews: number;
+//   rating: number;
+//   categories: [{title: string;}];
+// }
+
+
+
+export default function About(props: { route: { params: { name: any; image: any; price: any; reviews: any; rating: any; categories: any; }; }; }) {
+  const { name, image, price, reviews, rating, categories } =
+    props.route.params;
+  // console.log(this.state.yelpRestaurantInfo)
+
   // console.log('props: ', props);
-  // const {name, image, price, reviews, rating, categories} = props;
-  const name = props?.name;
-  const image = props?.image;
-  const price = props?.price;
-  const reviews = props?.reviews;
-  const rating = props?.rating;
-  const categories = props?.categories;
+  
 
   // console.log('props: ', props);
   // categories ? console.log('categories: ', categories) : console.log('no categories');
 
   const formattedCategories = categories ? categories.map((cat: { title: any; }) => cat.title).join(' • ') : '';
-  // const description = `${formattedCategories && formattedCategories + " • "} ${price && " • " + price}  ${rating && " • 🎫 " + rating + "⭐"} ${reviews && "(" + reviews + "+)"}`;
-  const description = `${formattedCategories ?? ''} ${price ?? ''}  ${rating ?? ''} ${reviews ?? ''}`;
+  const description = `${formattedCategories} ${
+    price ? " • " + price : ""
+  } • 🎫 • ${rating} ⭐ (${reviews}+)`;
 
 
 
@@ -35,7 +45,7 @@ export default function About(props: any) {
     <View>
       <RestaurantImage image={image}/>
       <RestaurantName name={name}/>
-      <RestaurantDescription description={description}/>
+      <RestaurantDescription description={description} reviews={reviews} />
     </View>
   )
 }
@@ -62,7 +72,7 @@ const RestaurantName = (props: { name: any; }) => (
   </Text>
 );
 
-const RestaurantDescription = (props: { description: any; }) => (
+const RestaurantDescription = (props: { description: any; reviews: any; }) => (
   <Text 
     style={{ 
       fontSize: 15, 

@@ -23,6 +23,7 @@ interface Restaurant {
   categories: string[];
   price: string;
   reviews: number;
+  review_count: any;
   image_url: string;
 }
 

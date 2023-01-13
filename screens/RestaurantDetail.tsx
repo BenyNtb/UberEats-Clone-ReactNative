@@ -59,6 +59,7 @@ interface MenuItemsProps {
     title: string;
     description: string;
     price: string;
+    reviews: number;
     image: string;
   }[];
 }
@@ -66,12 +67,28 @@ interface MenuItemsProps {
 
 
 export default function RestaurantDetail(props: React.PropsWithChildren<RestaurantDetailProps>) {
+  // console.log('route props: ', props.route)
   const restaurantName = props.route?.params?.name;
+
+  const { route } = props;
+  const { params } = route;
+  const requiredProps = ['name', 'image', 'price', 'reviews', 'rating', 'categories'];
+  const missingProps = requiredProps.filter(prop => !params[prop]);
+
+  if (missingProps.length) {
+    console.log(`Missing prop(s): ${missingProps.join(', ')}`);
+    console.log('Props are not valid');
+    } else {
+    console.log('Props are valid');
+    }
+    
+    // const restaurantName = route?.params?.name;
+
   return (
     <View>
-      <About route={props.route} />
+      <About route={route} />
       <Divider width={1.8} style={{ marginVertical: 20 }} />
-      <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods} />
+      <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
       <ViewCart navigation={props.navigation} restaurantName={restaurantName}/>
       
     </View>

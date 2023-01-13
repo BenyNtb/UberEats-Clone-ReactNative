@@ -52,6 +52,7 @@ interface RestaurantItemProps {
   }
 
   interface Restaurant {
+    review_count: any;
     name: string;
     rating: number;
     categories: string[];
@@ -67,7 +68,7 @@ interface RestaurantItemProps {
   export default function RestaurantItems(props: RestaurantItemProps) {
       const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     // const navigation = useNavigation();
-    // console.log(props.restaurantData)
+    console.log(props.restaurantData)
     return (
         <>
             {props.restaurantData.map((restaurant, index) => (
@@ -79,7 +80,7 @@ interface RestaurantItemProps {
                     rating: restaurant.rating,
                     categories: restaurant.categories,
                     price: restaurant.price,
-                    reviews: restaurant.reviews
+                    reviews: restaurant.review_count,
                 }
                 )}
             >
@@ -92,6 +93,7 @@ interface RestaurantItemProps {
                 <RestaurantImage image={restaurant.image_url}/>
                 <RestaurantInfo name={restaurant.name} 
                 rating={restaurant.rating}
+                reviews={restaurant.review_count}
                 />
                 </View>
             </TouchableOpacity>
@@ -146,6 +148,7 @@ const RestaurantInfo = (props : any) => (
             justifyContent: 'center'
         }}>
             <Text >{props.rating}</Text>
+            <Text>{props.review_count}</Text>
         </View>
         
     </View>

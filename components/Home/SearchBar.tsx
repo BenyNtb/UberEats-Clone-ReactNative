@@ -21,7 +21,7 @@ export default function SearchBar({cityHandler} : {
             currentLocation={true}
             currentLocationLabel='Current location'
                 onPress={(data, details = null) => {
-                console.log(data.description);
+                // console.log(data.description);
                 const city = data
                     .description
                     .split(",")[0];
