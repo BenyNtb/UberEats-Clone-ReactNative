@@ -49,11 +49,11 @@ export default function OrderCompleted() {
         currency: "USD",
     });
 
-    useEffect (() => {
+    useEffect(() => {
         setLastOrder({
             items: items,
-        })
-    }, [])
+        });
+    }, [items]);
 
     return (
         <SafeAreaView style={{
