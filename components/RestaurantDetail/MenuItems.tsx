@@ -7,45 +7,6 @@ import RestaurantDetail from '../../screens/RestaurantDetail';
 
 
 
-const foods = [
-  {
-    title: "Sushi",
-    description: "4 spring rolls with salmon - avocado, 6 california rolls salmon-avocado, 6 makis salmon-avocado",
-    price: "$14.00",
-    image:
-      "https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  },
-  {
-    title: "Pizza Margherita",
-    description:
-      "Tomato sauce, mozzarella, oregano",
-    price: "$8.20",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=781&q=80",
-  },
-  {
-    title: "Balanced Salad",
-    description:
-      "Light Rice, Black Beans, Chicken, Fajita Veggies, Fresh Tomato Salsa, Guacamole, and Extra Romaine Lettuce - 61g Carbs, 45g Protein, 33g Fat",
-    price: "$14.50",
-    image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photosV2/b0ba3e1b-d300-4b89-8d19-68efae27ef32-retina-large.jpg",
-  },
-  {
-    title: "Burger",
-    description:
-      "3 premium ground brisket, chuck, and short rib smashed patties, American cheese and our dirty sauce on a Martin’s famous potato roll",
-    price: "$18.50",
-    image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photos/dac788a8-25e3-4d86-81d4-c4202b51a298-retina-large-jpeg",
-  },
-  {
-    title: "Chicken Wings",
-    description: "Korean fried chicken: Crispy, juicy, and minimally greasy",
-    price: "$15.95",
-    image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photos/383f45aa-9c2f-49ce-914e-6f201ecff0a9-retina-large.jpg",
-  },
-];
 
 
 
@@ -75,10 +36,17 @@ interface Props{
   foods: Item[],
   restaurantName:string,
   checkboxValue: boolean,
+  hideCheckbox: boolean,
+  marginLeft: number,
 
 }
 
-export default function MenuItems({foods, restaurantName}: Props
+export default function MenuItems({
+  foods, 
+  restaurantName, 
+  hideCheckbox, 
+  marginLeft
+}: Props
   
   ) {
     const dispatch = useDispatch();
@@ -109,21 +77,25 @@ export default function MenuItems({foods, restaurantName}: Props
     <ScrollView showsHorizontalScrollIndicator={false}>
     {foods.map((food: { title: any; description: any; price: any; image?: string;  }, index: React.Key | null | undefined) => (
     <View key={index}>
-       <View style={styles.menuItemStyle}>
-        <BouncyCheckbox
-          fillColor='#06C167'
-          onPress={(checkboxValue) => selectItem(food, checkboxValue)}
-          isChecked={isFoodInCart(food, cartItems)}
-          // isChecked={isChecked}
-        />
-          <FoodInfo food={food}/>
-          <FoodImage food={food} />
-        </View>
-        <Divider 
-          width={0.5}  
-          orientation='vertical' 
-          style={{ marginHorizontal: 20 }} 
+        <View style={styles.menuItemStyle}>
+          { hideCheckbox ? (
+          <></>
+          ) : ( 
+          <BouncyCheckbox
+            fillColor='#06C167'
+            onPress={(checkboxValue) => selectItem(food, checkboxValue)}
+            isChecked={isFoodInCart(food, cartItems)}
+            // isChecked={isChecked}
           />
+          )}
+            <FoodInfo food={food}/>
+            <FoodImage food={food} marginLeft={ marginLeft ? marginLeft : 0 }/>
+        </View>
+          <Divider 
+            width={0.5}  
+            orientation='vertical' 
+            style={{ marginHorizontal: 20 }} 
+            />
     </View>
     ))}
     </ScrollView>
@@ -139,13 +111,14 @@ const FoodInfo = (props: { food: { title: string | number | boolean | React.Reac
   </View>
 );
 
-const FoodImage = (props: { food: any; }) => (
+const FoodImage = (props: { food: any; marginLeft: number; }) => (
   <View>
     <Image source={{uri: (props.food || {}).image}} 
       style={{ 
         width: 100, 
         height: 100,
-        borderRadius: 8
+        borderRadius: 8,
+        marginLeft: props.marginLeft,
       }}
     />
   </View>

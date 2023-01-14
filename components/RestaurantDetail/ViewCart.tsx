@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
+// import firebase from '../../firebase';
 import OrderItem from './OrderItem';
+
 
 interface Item {
     title: string;
@@ -19,7 +21,7 @@ interface RootState {
     };
   }
 
-export default function ViewCart( ) {
+export default function ViewCart({ navigation }: { navigation: any }) {
     const [modalVisible, setModalVisible] = useState(false);
     const {items, restaurantName} = useSelector((state: RootState) => state.cartReducer.selectedItems);
     // console.log("items after useSelector", items)
@@ -34,6 +36,20 @@ export default function ViewCart( ) {
     });
     console.log(totalUSD);
     // console.log(items)
+
+    // const addOrderToFireBase = () => {
+    //     const db = firebase.firestore();
+    //     db.collection('orders').add({
+    //         items: items,
+    //         restaurantName: restaurantName,
+    //         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //     });
+    //     setModalVisible(false);
+    // };
+    const confirmOrder = () => {
+        setModalVisible(false);
+        navigation.navigate('OrderCompleted');
+    };
 
     const styles = StyleSheet.create({
         modalContainer: {
@@ -93,12 +109,17 @@ export default function ViewCart( ) {
                                 width: 300,
                                 position: "relative"
                             }}
-                            onPress={() => setModalVisible(false)}
+                            onPress={() => {
+                                confirmOrder()
+                            }}
                             >
                                 <Text style={{
                                     color: 'white',
                                     fontSize: 20,
-                                }}>Checkout </Text>
+                                }}
+                                >
+                                    Checkout 
+                                </Text>
                                 <Text style={{
                                     position: 'absolute',
                                     right: 20,

@@ -89,7 +89,7 @@ export default function RestaurantDetail(props: React.PropsWithChildren<Restaura
       <About route={route} />
       <Divider width={1.8} style={{ marginVertical: 20 }} />
       <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
-      <ViewCart navigation={props.navigation} restaurantName={restaurantName}/>
+      <ViewCart navigation={props.navigation} />
       
     </View>
   );
