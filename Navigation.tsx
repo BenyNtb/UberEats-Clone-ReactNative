@@ -8,6 +8,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
 import configureStore from './redux/store';
 import OrderCompleted from './screens/OrderCompleted';
+import Account from './screens/Account';
+import BottomTabs from './components/Home/BottomTabs'
 
 // const store = configureStore();
 
@@ -20,9 +22,10 @@ export default function RootNavigation() {
     <ReduxProvider store={store()} >
       <NavigationContainer>
           <Stack.Navigator initialRouteName='Home' screenOptions={screenOptions}>
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
-              <Stack.Screen name="OrderCompleted" component={OrderCompleted} />
+              <Stack.Screen name="Home" component={Home} options={{ header: ({ navigation }) => <BottomTabs navigation={navigation} /> }} />
+              <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} options={{ header: ({ navigation }) => <BottomTabs navigation={navigation} /> }} />
+              <Stack.Screen name="OrderCompleted" component={OrderCompleted} options={{ header: ({ navigation }) => <BottomTabs navigation={navigation} /> }} />
+              <Stack.Screen name="Account" component={Account} options={{ header: ({ navigation }) => <BottomTabs navigation={navigation} /> }} />
           </Stack.Navigator>
       </NavigationContainer>
     </ReduxProvider>
