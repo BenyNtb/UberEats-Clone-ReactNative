@@ -129,7 +129,7 @@ export default function Account() {
                         color: '#77877C'
                     }}
                 >
-                    Invite a friend and earn free credits with their first order.
+                    Invite a friend and earn free credits with {"\n"} their first order.
                 </Text>
                 <FontAwesome5
                     name='chevron-right'

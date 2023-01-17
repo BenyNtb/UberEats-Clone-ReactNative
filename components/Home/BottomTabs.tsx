@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function BottomTabs() {
     const navigation = useNavigation()
+    const activeColor = navigation.isFocused() ? '#ED764C' : '#8E9BAE';
 
     return (
         <View
@@ -15,15 +16,15 @@ export default function BottomTabs() {
             marginHorizontal: 50,
             justifyContent: "space-between", 
         }}>
-        <Icon icon='home' onPress={() => navigation.navigate('Home') }/>
-        <Icon icon='search' />
-        <Icon icon='percent' />
-        <Icon icon='user' onPress={() => navigation.navigate('Account')} />
+        <Icon icon='home' color={activeColor} onPress={() => navigation.navigate('Home') }/>
+        <Icon icon='search' color={'#8E9BAE'} onPress={() => navigation.navigate('Search') } />
+        <Icon icon='percent' color={'#8E9BAE'}/>
+        <Icon icon='user' color={'#8E9BAE'} onPress={() => navigation.navigate('Account')} />
         </View>
     )
     }
 
-    const Icon = (props: {  icon: string; onPress?: () => void }) => (
+    const Icon = (props: {  icon: string; color:string, onPress?: () => void }) => (
     <TouchableOpacity onPress={props.onPress} >
         <View>
         <FontAwesome5
@@ -32,10 +33,11 @@ export default function BottomTabs() {
             style={{
             marginBottom: 3,
             bottom: -10,
-            alignSelf: 'center'
+            alignSelf: 'center',
+            color: props.color
             }}
         />
-        <Text>{props.text}</Text>
         </View>
     </TouchableOpacity>
 )
+

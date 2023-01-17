@@ -86,7 +86,8 @@ const items = [
         text: 'Vegetarian',
         color: '#8E9BAE'
     }
-]
+];
+
 
 export default function Categories() {
     return (

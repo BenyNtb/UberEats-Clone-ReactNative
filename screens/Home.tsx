@@ -79,7 +79,7 @@ export default function Home({navigation}: {navigation: any}) {
         <Categories />
         <RestaurantItems  {...{restaurantData,navigation}} />
       </ScrollView>
-      <Divider width={1}/>
+      <Divider />
         <BottomTabs />
     </SafeAreaView>
   )

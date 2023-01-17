@@ -1,48 +1,48 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import About from '../components/RestaurantDetail/About';
 import { Divider } from 'react-native-elements';
 import MenuItems from '../components/RestaurantDetail/MenuItems';
 import ViewCart from '../components/RestaurantDetail/ViewCart';
+import { NativeBaseProvider } from 'native-base';
 
 
 const foods = [
   {
-    title: "Sushi",
-    description: "4 spring rolls with salmon - avocado, 6 california rolls salmon-avocado, 6 makis salmon-avocado",
+    title: "Giant Menu",
+    description: "Giant Menu with Giant sauce",
     price: "$14.00",
     image:
-      "https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      "https://static.takeaway.com/images/chains/fr/quick/products/menumenu_megagiant-500x500.png?timestamp=1673719116",
   },
   {
-    title: "Pizza Margherita",
+    title: "Le Montagnard",
     description:
-      "Tomato sauce, mozzarella, oregano",
-    price: "$8.20",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=781&q=80",
+      "Tenders, bacon, mushrooms, onions, and mozzarella cheese with a side of ranch dressing",
+    price: "$11.40",
+    image: "https://www.dish.guide/ir/restaurant/fa9/fa9b4bb42ad1327ca28a1410e5e1a9e8.jpg",
   },
   {
-    title: "Balanced Salad",
+    title: "Nacho Crunch Grilled Stuft Burrito",
     description:
-      "Light Rice, Black Beans, Chicken, Fajita Veggies, Fresh Tomato Salsa, Guacamole, and Extra Romaine Lettuce - 61g Carbs, 45g Protein, 33g Fat",
+      "Nacho Crunch Grilled Stuft Burrito: Nacho cheese sauce, seasoned beef, nacho cheese Doritos® Locos Taco chips, lettuce, and tomatoes",
     price: "$14.50",
     image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photosV2/b0ba3e1b-d300-4b89-8d19-68efae27ef32-retina-large.jpg",
+      "https://media.timeout.com/images/105943738/750/562/image.jpg",
   },
   {
-    title: "Burger",
+    title: "Whooper Menu",
     description:
-      "3 premium ground brisket, chuck, and short rib smashed patties, American cheese and our dirty sauce on a Martin’s famous potato roll",
-    price: "$18.50",
+      "A ¼ lb* of flame-grilled beef patty topped with juicy tomatoes, crisp lettuce, creamy mayonnaise, ketchup, crunchy pickles, and sliced white onions on a soft sesame seed bun",
+    price: "$10.30",
     image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photos/dac788a8-25e3-4d86-81d4-c4202b51a298-retina-large-jpeg",
+      "https://cdn.sanity.io/images/czqk28jt/prod_bk/f4dc27eb7337f7cbd12d3ccd840e6a031fcba622-360x270.jpg",
   },
   {
-    title: "Chicken Wings",
-    description: "Korean fried chicken: Crispy, juicy, and minimally greasy",
-    price: "$15.95",
+    title: "Aloo Patty Sandwich",
+    description: "Aloo patty seasoned with special herbs and spices, paired with your choice of your favourite nutritious veggies, on a freshly baked bread.",
     image:
-      "https://img.cdn4dd.com/p/fit=cover,width=150,height=150,format=auto,quality=50/media/photos/383f45aa-9c2f-49ce-914e-6f201ecff0a9-retina-large.jpg",
+      "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/fatr5rnkgph710hgtjpy",
   },
 ];
 
@@ -85,13 +85,12 @@ export default function RestaurantDetail(props: React.PropsWithChildren<Restaura
     // const restaurantName = route?.params?.name;
 
   return (
-    <View>
+    <ScrollView>
       <About route={route} />
-      <Divider width={1.8} style={{ marginVertical: 20 }} />
       <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
       <ViewCart navigation={props.navigation} />
       
-    </View>
+    </ScrollView>
   );
 }
 
