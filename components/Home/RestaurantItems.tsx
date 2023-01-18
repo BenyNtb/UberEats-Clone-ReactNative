@@ -162,6 +162,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { Banner } from 'react-native-paper';
 import _ from 'lodash';
+import Search from '../../screens/Search';
 
 interface RestaurantItemProps {
     restaurantData: Restaurant[];

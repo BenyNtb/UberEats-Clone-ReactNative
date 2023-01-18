@@ -22,6 +22,7 @@
     "native-base": "^3.4.25",
     "react": "18.1.0",
     "react-devtools": "^4.27.1",
+    "react-hook-form": "^7.42.1",
     "react-native": "0.70.5",
     "react-native-axios": "^0.17.1",
     "react-native-bouncy-checkbox": "^3.0.6",
@@ -37,7 +38,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "expo-font": "~11.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput, SafeAreaView, FlatList, Image, StyleSheet, ImageSourcePropType } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import SearchBar from '../components/Home/SearchBar'
@@ -68,6 +68,11 @@ interface SearchProps {
     restaurantData: Restaurant[];
 }
 
+Search.defaultProps = {
+    restaurantData: []
+}
+
+
 interface RestaurantItemProps {
 restaurantData: Restaurant[];
 }
@@ -88,10 +93,14 @@ RestaurantDetail: any | undefined;
 
 export default function Search(props: RestaurantItemProps) {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    
+    
+    
+    
     console.log(props.restaurantData)
     
-
     return (
+
         <>
             <SafeAreaView style={{ backgroundColor:'white' }}>
                 <SearchBar cityHandler={undefined}/>
@@ -117,16 +126,13 @@ export default function Search(props: RestaurantItemProps) {
             </View>
             <View style={{ marginTop: 30, marginHorizontal: 10 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, left: 10 }}>Restaurant</Text>
-                {/* {props.restaurantData.map((item: Restaurant, index: number) => (
-                    <RestaurantCard
-                    key={index}
-                    image={{uri: item.image_url}}
-                    review={item.rating}
-                    name={item.name}
-                    categories={item.categories.join(', ')}
-                    />
-                    ))}                 */}
+                {props.restaurantData.map((restaurant, index) => (
+                    
+                        <RestaurantCard key={index}   />
+
+                ))}
             </View>
+            
         </>
     )
 }

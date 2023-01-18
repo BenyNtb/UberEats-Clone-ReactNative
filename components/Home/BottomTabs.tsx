@@ -18,7 +18,7 @@ export default function BottomTabs() {
         }}>
         <Icon icon='home' color={activeColor} onPress={() => navigation.navigate('Home') }/>
         <Icon icon='search' color={'#8E9BAE'} onPress={() => navigation.navigate('Search') } />
-        <Icon icon='percent' color={'#8E9BAE'}/>
+        <Icon icon='percent' color={'#8E9BAE'} onPress={() => navigation.navigate('Promo') }/>
         <Icon icon='user' color={'#8E9BAE'} onPress={() => navigation.navigate('Account')} />
         </View>
     )
