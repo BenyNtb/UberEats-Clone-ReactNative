@@ -39,10 +39,10 @@ const avatarAccount = () => {
                         overflow: 'hidden',
                         backgroundColor: '#e1f3e8',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     }}
                 />
-                <Text style={{ alignSelf: 'center', fontWeight: 'bold', marginLeft: 10 }}>{props.text}</Text>
+                <Text style={{ alignSelf: 'center', fontWeight: 'bold', marginLeft: 10, top: 10 }}>{props.text}</Text>
             </HStack>
             <FontAwesome5
                 name='chevron-right'
@@ -50,6 +50,8 @@ const avatarAccount = () => {
                 style={{
                     alignSelf: 'flex-end',
                     color: 'lightgrey',
+                    marginBottom: 10,
+                    bottom: 20,
                 }}
             />
         </NativeBaseProvider>
@@ -60,7 +62,7 @@ const avatarAccount = () => {
 export default function Account() {
     const [visible, setVisible] = React.useState(true);
     return (
-        <>
+        <View>
         <SafeAreaView>
             <Text style={{
                 fontSize: 15, 
@@ -159,12 +161,12 @@ export default function Account() {
                     >
                         General
                     </Text>
-                    <Icon icon='user' text='My Account' /> 
-                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: 15 }}/>
+                    <Icon icon='user' text='My Account' iconStyle={{ alignSelf: 'center', padding: 10 }}  /> 
+                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 1, marginTop: -15 }}/>
                     <Icon icon='home' text='Address' />
-                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: 15 }}/>
+                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
                     <Icon icon='money-check' text='Billing/Payment' />
-                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: 15 }}/>
+                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
                 </View>
                 <View     
                     style={{
@@ -178,18 +180,20 @@ export default function Account() {
                         style={{
                             fontSize: 17,
                             fontWeight: 'bold',
-                            marginBottom: 20,
+                            marginBottom: 5,
                             color: 'grey'
                         }}
                     >
                         Settings
                     </Text>
                     <Icon icon='globe' text='Language' />
-                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: 15 }}/>
+                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
                     <Icon icon='lightbulb' text='Dark Mode' />
                 </View>
             </ScrollView>
-            <BottomTabs />
-        </>
+            <View style={{ bottom: 30, height: 300 }}>
+                <BottomTabs />
+            </View>
+        </View>
     )
 }

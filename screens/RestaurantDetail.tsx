@@ -5,6 +5,7 @@ import { Divider } from 'react-native-elements';
 import MenuItems from '../components/RestaurantDetail/MenuItems';
 import ViewCart from '../components/RestaurantDetail/ViewCart';
 import { NativeBaseProvider } from 'native-base';
+import Search from './Search';
 
 
 const foods = [
@@ -89,7 +90,7 @@ export default function RestaurantDetail(props: React.PropsWithChildren<Restaura
       <About route={route} />
       <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
       <ViewCart navigation={props.navigation} />
-      
+      {/* <Search/> */}
     </ScrollView>
   );
 }

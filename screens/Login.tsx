@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import orange from '../assets/images/orange.jpg';
 import green from '../assets/images/green.jpg';
 import purple from '../assets/images/purple.jpg';
+import brown from '../assets/images/brown.jpg';
 import grey from '../assets/images/grey.jpg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -16,111 +17,112 @@ const Login = (props: Props) => {
     return (
         <View style={styles.container}>
             <View style={styles.containerLogin}>
-                <View style={styles.rowContainer}>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={orange}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={green}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={purple}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={orange}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        {/* <Image
-                            source={green}
-                            style={styles.image}
-                            resizeMode="cover"
-                        /> */}
-                        <View style={styles.iconContainer}>
-                            <Ionicons 
-                                name="restaurant-outline" 
-                                size={40} 
-                                color="white" 
-                                style={[
-                                    styles.icon,
-                                    {
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    }
-                                ]} 
-                                />
+                <View style={styles.bigContainerRow}>
+                    <View style={styles.rowContainer1}>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={brown}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={brown}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={brown}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
                         </View>
                     </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={green}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
+                    <View style={styles.rowContainer2}>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={brown}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            {/* <Image
+                                source={green}
+                                style={styles.image}
+                                resizeMode="cover"
+                            /> */}
+                            <View style={styles.iconContainer}>
+                                <Ionicons 
+                                    name="restaurant-outline" 
+                                    size={60} 
+                                    color="white" 
+                                    style={[
+                                        {
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        }
+                                    ]} 
+                                    />
+                            </View>
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={green}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
                     </View>
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={orange}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
+                    <View style={styles.rowContainer3}>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={brown}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={grey}
+                                style={[styles.image,]}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={purple}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
                     </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={grey}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={purple}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={orange}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={green}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
-                    <View style={styles.columnContainer}>
-                        <Image
-                            source={orange}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
-                    </View>
+                    <View style={styles.rowContainer4}>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={orange}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={green}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        <View style={styles.columnContainer}>
+                            <Image
+                                source={orange}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
+                        </View>
                 </View>
                 </View>
             <Text style={styles.bigText}>Hi, we're Uber Eats Redesign 👋</Text>
@@ -153,19 +155,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         margin: 10,
         textAlign: 'center',
+        bottom: 50,
     },
     smallText: {
         fontSize: 16,
         margin: 10,
         textAlign: 'center',
-        color: '#98A3A9'
+        color: '#98A3A9',
+        bottom: 50,
+        lineHeight: 25,
     },
     buttonContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
-        top: 50,
+        bottom: 30,
     },
     buttonLogin: {
         backgroundColor: '#F4FEFF',
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
         borderColor: '#333544',
         margin: 10,
         height: 60,
-        width: 170,
+        width: 200,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -204,34 +209,78 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F4FEFF',
+        bottom: 50,
     },
-    rowContainer: {
+    bigContainerRow: {
+        // flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 90
+    },
+    rowContainer1: {
         flexDirection: 'row',
         width: '100%',
         height: '25%',
         transform: [{ rotate: '55deg' }],
         marginBottom: 80,
+        top: 110,
+        left: 210,
+        padding: 10,
+        
+    },
+    rowContainer2: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '25%',
+        transform: [{ rotate: '55deg' }],
+        marginBottom: 150,
+        top: 80,
+        left: 90,
+        // marginBottom: 20,
+        
+    },
+    rowContainer3: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '25%',
+        transform: [{ rotate: '55deg' }],
+        // marginBottom: 80,
+        bottom: 210,
+        right: 100,
+        padding: 10,
+        
+    },
+    rowContainer4: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '25%',
+        transform: [{ rotate: '55deg' }],
+        marginBottom: 80,
+        bottom: 340,
+        right: 310,
+        padding: 10,
+        
     },
     columnContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        margin: 90,
+        marginRight: 130,
     },
     image: {
-        width: '90%',
-        height: '90%',
-        borderWidth: 5,
+        width: 170,
+        height: 210,
+        borderWidth: 6,
         borderColor: 'white',
         transform: [{ rotate: '-90deg' }],
-        borderRadius: 15,
-    },
-    icon: {
-        width: '50%',
-        height: '50%',
+        borderRadius: 20,
     },
     iconContainer: {
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         borderRadius: 15,
         borderWidth: 5,
         alignItems: 'center',
