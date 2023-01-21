@@ -138,6 +138,7 @@ export default function About(props:  {
               marginRight: 0,
               color: isFavorite ? 'red' : 'black',
             }}
+            solid
           />
         </TouchableOpacity>
 
@@ -156,7 +157,7 @@ export default function About(props:  {
         <View style={{ flexDirection: 'row', marginTop: 20, left: 20, bottom: 25 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15, backgroundColor: 'white', height: 40, width: 65, borderRadius: 30, borderColor: '#EBECF0', borderWidth: 1.5,
         justifyContent: 'center', }}>
-            <FontAwesome5 name='star' size={20} style={{ marginRight: 5, color: 'orange' }} />
+            <FontAwesome5 name='star' size={20} style={{ marginRight: 5, color: 'orange' }} solid />
             <Text style={{ fontSize: 16, fontWeight: '400', marginLeft: 5 }}>{rating}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'white', height: 40, width: 110, borderRadius: 30, borderColor: '#EBECF0', borderWidth: 1.5,
