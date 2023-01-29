@@ -1,4 +1,4 @@
-import { View, ScrollView, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Image, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { Divider } from 'react-native-elements';
 import React, { useState } from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -20,8 +20,32 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 19,
     fontWeight: '600',
-  }
-})
+  },
+  selectedItemsContainer: {
+    marginTop: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 10,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  selectedItemsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  selectedItemName: {
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  selectedItemAmount: {
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  trashIcon: {
+    marginRight: 10,
+  },
+});
 
 interface Item {
   title: string;
@@ -45,25 +69,64 @@ interface Props{
 
 
 export default function MenuItems({ foods, restaurantName, hideCheckbox, marginLeft}: Props) {
-    const dispatch = useDispatch();
-    
-    const selectItem = (item: Item, checkboxValue: boolean) => dispatch({
+  const dispatch = useDispatch();
+
+  const selectItem = (item: Item, checkboxValue: boolean, quantity: number) => dispatch({
       type: 'ADD_TO_CART', 
       payload: {
         ...item,
         restaurantName: restaurantName,
         checkboxValue: checkboxValue,
+        quantity: quantity
       }
-    });
-    const cartItems = useSelector((state) => state.cartReducer.selectedItems.items);
-
-  // console.log("state before useSelector",state)
+  });
+  
+  const cartItems = useSelector((state) => state.cartReducer.selectedItems.items);
+  
   const isFoodInCart = (_food: { title: any; }, cartItems: any[]) => 
-    Boolean(cartItems.find((item: any) => item.title === _food.title));
-    console.log("cartItems", cartItems);
-    
+      Boolean(cartItems.find((item: any) => item.title === _food.title));
+  
   const [isChecked, setIsChecked] = useState(false);
   const selectedItems = cartItems.filter((item: any) => item.restaurantName === restaurantName);
+  
+  const [quantity, setQuantity] = useState(0);
+  
+  const handleCheckboxPress = (item: Item) => {
+      LayoutAnimation.configureNext({
+          duration: 500,
+          update: {
+              type: LayoutAnimation.Types.easeInEaseOut
+          }
+      });
+  
+      setIsChecked(!isChecked);
+      setQuantity(prevQuantity => prevQuantity + 1);
+      selectItem(item, true, quantity + 1);
+  };
+  
+  const handleTrashPress = (item: Item) => {
+      LayoutAnimation.configureNext({
+          duration: 500,
+          update: {
+              type: LayoutAnimation.Types.easeInEaseOut
+          }
+      });
+      setIsChecked(false);
+      setQuantity(0);
+      selectItem(item, true, quantity - 1);
+      dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+  };
+  
+  const handlePlusPress = (item: Item) => {
+      setQuantity(quantity + 1);
+      selectItem(item, true, quantity + 1);
+  };
+  
+  
+  
+
+
+
   
   return (
     <ScrollView>
@@ -105,7 +168,6 @@ export default function MenuItems({ foods, restaurantName, hideCheckbox, marginL
                       <Text numberOfLines={2} style={{color: 'grey', width: 140}}>{food.description}</Text>
                       <Text style={{ fontWeight: 'bold', fontSize: 18, top: 10 }}>{food.price}</Text>
                     </View> 
-
                     <View style={{
                       alignItems: 'center',
                       backgroundColor: '#C7F6B6',
@@ -124,39 +186,41 @@ export default function MenuItems({ foods, restaurantName, hideCheckbox, marginL
                     unfillColor="#06C167"
                     iconComponent={<FontAwesome5 name="plus" size={20} color="white" />}
                     size={50}
-                    onPress={(checkboxValue) => selectItem(food, checkboxValue)}
+                    // onPress={handleCheckboxPress => selectItem(food, true, quantity)}
                     isChecked={isFoodInCart(food, cartItems)}
                     style={{ top: 40, left: 10 }}
+                    onPress={() => handleCheckboxPress(food)}
                   />
                 </View>
-              </View>
+                {isChecked && (
+      <View style={{backgroundColor: '#F8F8F8', width: 370, height: 90, bottom: 25, left: 28, zIndex: -1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+        <View style={{  flexDirection: 'row',  top: 30 }}>
+          <Text style={{ color: 'red', marginHorizontal: 10, fontWeight: 'bold' }}> {quantity}X </Text>
+          <View style={{ flexDirection: 'column' }}>
+            <Text style={{ fontWeight: 'bold' }}>{food.title}</Text>
+            <Text>{food.price}</Text>
+          </View>
+        </View>
+        <View style={{ justifyContent: 'space-between', flexDirection: 'row', left: 230, width: 130, height: 45, backgroundColor: 'white', borderRadius: 20, borderColor: '#F2F2F2', borderWidth: 2 }}>
+          <View style={{ width: 30, height: 30, backgroundColor: '#ECB5B1', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
+            <FontAwesome5 name='trash' color='red' size={15} onPress={() => handleTrashPress(food)} />
+          </View>
+            <Text style={{ fontSize: 18, top: 5 }}>
+              {quantity}
+            </Text>
+            <View style={{ width: 30, height: 30, backgroundColor: '#DBE2F5', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
+              <FontAwesome5 name='plus' color='#5A5FBF' size={15} light onPress={() => handlePlusPress(food)} />
             </View>
-        )})}
+          </View>
+                </View>
+              )}
+            </View>
+          </View>
+        );
+      })}
       </ScrollView>
     </ScrollView>
   );
 }
 
-// const FoodInfo = (props: { food: { title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; price: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }; }) => (
-//   <View style={{ width: 240, justifyContent: 'space-evenly' }}>
-//     <Text style={styles.titleStyle}>{props.food.title}</Text>
-//     <Text>{props.food.description}</Text>
-//     <Text>{props.food.price}</Text>
-//     {/* <Text>{props.food.reviews}</Text> */}
-//   </View>
-// );
-
-// const FoodImage = (props: { food: any; marginLeft: number; }) => (
-//   <View>
-//     <Image source={{uri: (props.food || {}).image}} 
-//       style={{ 
-//         width: 100, 
-//         height: 100,
-//         borderRadius: 8,
-//         marginLeft: props.marginLeft,
-//       }}
-//     />
-//   </View>
-  
-// );
 

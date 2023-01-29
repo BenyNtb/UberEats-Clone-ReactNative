@@ -1,58 +1,8 @@
-// import {ScrollView, View, Text, Image} from 'react-native'
-// import React from 'react';
-
-// const items = [
-//     {
-//         image: require('../../assets/images/shopping-bag.png'),
-//         text: 'Pickup'
-//     }, {
-//         image: require('../../assets/images/soft-drink.png'),
-//         text: 'Soft Drinks'
-//     }, {
-//         image: require('../../assets/images/bread.png'),
-//         text: 'Bakery Items'
-//     }, {
-//         image: require('../../assets/images/fast-food.png'),
-//         text: 'Fast Foods'
-//     }, {
-//         image: require('../../assets/images/deals.png'),
-//         text: 'Deals'
-//     }, {
-//         image: require('../../assets/images/coffee.png'),
-//         text: 'Coffee & Tea'
-//     }, {
-//         image: require('../../assets/images/desserts.png'),
-//         text: 'Desserts'
-//     }
-// ];
-
-// export default function Categories() {
-//     return (
-//         <View
-//         style={{ marginTop: 5, backgroundColor: 'white', paddingVertical: 10, paddingLeft: 20}}
-//         >
-//             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-//                 {items.map((item, index) => (
-//                 <View key= {index} style={{ alignItems: 'center', marginRight: 30}}>
-//                     <Image
-//                 source={item.image}
-//                 style={{
-//                 width: 50,
-//                 height: 40,
-//                 resizeMode: 'contain'
-//             }}/>
-//             <Text style={{ fontSize: 13, fontWeight: "900" }}>{item.text}</Text>
-//                 </View>
-//         ))}
-//         </ScrollView>
-//         </View>
-        
-//     )
-// }
-
-
+import i18n from 'i18n-js';
+import { en, fr } from "../../localizations";
+import * as Localization from "expo-localization";
 import { View, Text, FlatList, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Card } from 'react-native-elements'
 
 const items = [
@@ -90,9 +40,14 @@ const items = [
 
 
 export default function Categories() {
+  const [locale, setLocale] = useState(Localization.locale);
+  i18n.fallbacks = true;
+  i18n.translations = { en, fr };
+  i18n.locale = locale;
+  i18n.locale = "en";
     return (
       <View style={{ marginHorizontal: 20}}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Popular categories</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('PopularCategories')}</Text>
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}

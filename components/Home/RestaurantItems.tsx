@@ -1,162 +1,8 @@
-// import { View, Text, Image, TouchableOpacity } from 'react-native'
-// import React from 'react';
-// import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-// import { useNavigation } from '@react-navigation/native';
-// import { StackNavigationProp } from '@react-navigation/stack';
-
-
-
-
-// export const localRestaurants = [
-//     {
-//         name: "Le Conteur",
-//         image_url:
-//             "https://lh3.googleusercontent.com/p/AF1QipP3JscilNXEPD1GoROFwIIv-Yh3kjhXYZU14cDt=s680-w680-h510",
-//         categories: ["Middle Eastern"],
-//         price: "€€",
-//         reviews: 466,
-//         rating: 4.5,
-//     },
-//     {
-//         name: "A L'Angolo",
-//         image_url:
-//             "https://lh3.googleusercontent.com/p/AF1QipOk7f5xHMWaEHVoyXfiDUHYgzjclXGPSOioQsEn=s680-w680-h510",
-//         categories: ["Italian", "Pizzeria"],
-//         price: "€€",
-//         reviews: 666,
-//         rating: 4.5,
-//     },
-//     {
-//         name: "Aux Armes de Bruxelles",
-//         image_url:
-//         "https://lh3.googleusercontent.com/p/AF1QipPuS_2rHnjY0MHYZ8eyOxJdBNDlZpcayjoCWMSH=s680-w680-h510",
-//         categories: ["Belgian", "Flemish"],
-//         price: "€€",
-//         reviews: 2200,
-//         rating: 4.1,
-//     },
-//     {
-//         name: "Kabuki",
-//         image_url:
-//             "https://lh3.googleusercontent.com/p/AF1QipOQrRO6anBHhzLo_4X8_CG_Rww8Si8EOeNIs6ra=s680-w680-h510",
-//         categories: ["Japanese", "Sushi"],
-//         price: "€€",
-//         reviews: 2300,
-//         rating: 4.0,
-//     },
-// ];
-
-
-// interface RestaurantItemProps {
-//     restaurantData: Restaurant[];
-//   }
-
-//   interface Restaurant {
-//     review_count: any;
-//     name: string;
-//     rating: number;
-//     categories: string[];
-//     price: string;
-//     reviews: number;
-//     image_url: string;
-//   }
-//   export type RootStackParamList = {
-//     RestaurantDetail: any | undefined;
-//   };
-
-
-//   export default function RestaurantItems(props: RestaurantItemProps) {
-//       const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-//     // const navigation = useNavigation();
-//     console.log(props.restaurantData)
-//     return (
-//         <>
-//             {props.restaurantData.map((restaurant, index) => (
-//                 <TouchableOpacity
-//                 key={index}
-//                 onPress={() => navigation.navigate('RestaurantDetail', {
-//                     name: restaurant.name,
-//                     image: restaurant.image_url,
-//                     rating: restaurant.rating,
-//                     categories: restaurant.categories,
-//                     price: restaurant.price,
-//                     reviews: restaurant.review_count,
-//                 }
-//                 )}
-//             >
-//                 <View 
-//                 style={{
-//                 marginTop: 10,
-//                 padding: 15,
-//                 backgroundColor: 'white'
-//                 }}>
-//                 <RestaurantImage image={restaurant.image_url}/>
-//                 <RestaurantInfo name={restaurant.name} 
-//                 rating={restaurant.rating}
-//                 reviews={restaurant.review_count}
-//                 />
-//                 </View>
-//             </TouchableOpacity>
-//                 ))}
-//         </>
-//     )
-// }
-
-// const RestaurantImage = (props: { image: any; }) => (
-//     <>
-        
-//     <Image 
-//         source={{
-//             uri: props.image
-//         }}
-//         style={{ width: '100%', height: 180}}
-//         />
-//     <TouchableOpacity 
-//         style={{
-//             position: 'absolute', right: 20, top: 20
-//         }}>
-//         <MaterialCommunityIcons  name='heart-outline' size={25} color='white'/>
-//     </TouchableOpacity>
-//     </>
-// );
-
-
-// const RestaurantInfo = (props : any) => (
-//     <View style={{ 
-//         flexDirection: 'row', 
-//         justifyContent: 'space-between', 
-//         alignItems: 'center', 
-//         marginTop: 10
-//         }}
-//         >
-//         <View>
-//             <Text style={{ 
-//                 fontSize: 15,
-//                 fontWeight: 'bold'
-//                 }}>{props.name}</Text>
-//             <Text style={{
-//                 fontSize: 13,
-//                 color: 'gray'
-//             }}>30-45 min</Text>
-//         </View>
-//         <View style={{
-//             backgroundColor: '#eee',
-//             height: 30,
-//             width: 30,
-//             alignItems: 'center',
-//             borderRadius: 15,
-//             justifyContent: 'center'
-//         }}>
-//             <Text >{props.rating}</Text>
-//             <Text>{props.review_count}</Text>
-//         </View>
-        
-//     </View>
-// );
-
-
+import i18n from 'i18n-js';
+import { en, fr } from "../../localizations";
+import * as Localization from "expo-localization";
 import { View, Text, TouchableOpacity, Image, ScrollView, ColorValue } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
@@ -263,11 +109,16 @@ export default function RestaurantItems(props: RestaurantItemProps) {
     const [visible, setVisible] = React.useState(true);
     const shuffledRecentOrders = _.shuffle(props.restaurantData);
     const shuffledFreeDelivery = _.shuffle(props.restaurantData);
+    const [locale, setLocale] = useState(Localization.locale);
+    i18n.fallbacks = true;
+    i18n.translations = { en, fr };
+    i18n.locale = locale;
+    i18n.locale = "en";
     return (
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Popular Restaurants</Text>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>See All</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('PopularRestaurants')}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>{i18n.t('SeeAll')}</Text>
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {props.restaurantData.map((restaurant, index) => (
@@ -298,8 +149,8 @@ export default function RestaurantItems(props: RestaurantItemProps) {
             </ScrollView>
             <View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Recent Orders</Text>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>See All</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('RecentOrders')}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>{i18n.t('SeeAll')}</Text>
             </View>
                     <View style={{ 
                         flexDirection: 'row', 
@@ -388,8 +239,8 @@ export default function RestaurantItems(props: RestaurantItemProps) {
             </View>
             <View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Recently Added</Text>
-                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>See All</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('RecentlyAdded')}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>{i18n.t('SeeAll')}</Text>
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {shuffledRecentOrders.map((restaurant, index) => (
@@ -446,7 +297,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                     />
                 )}>
                 <Text style={{ color: 'black', fontWeight: 'bold' }}>
-                    Invite friends and pay less {"\n"} {"\n"}
+                {i18n.t('InviteFriends')}{"\n"} {"\n"}
                 </Text>
                 
                 <Text
@@ -456,7 +307,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         color: '#77877C'
                     }}
                 >
-                    Invite a friend and earn free credits with {"\n"} their first order.
+                    {i18n.t('FreeCredit')} {"\n"} {i18n.t('TheirFirstOrder')}.
                 </Text>
                 <FontAwesome5
                     name='chevron-right'
@@ -470,8 +321,8 @@ export default function RestaurantItems(props: RestaurantItemProps) {
             </View>
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Free Delivery</Text>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>See All</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('FreeDelivery')}</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: '#F26E50' }}>{i18n.t('SeeAll')}</Text>
                 </View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {shuffledFreeDelivery.map((restaurant, index) => (

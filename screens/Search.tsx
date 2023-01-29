@@ -1,3 +1,6 @@
+import i18n from 'i18n-js';
+import { en, fr } from "../localizations";
+import * as Localization from "expo-localization";
 import { View, Text, TouchableOpacity, TextInput, SafeAreaView, FlatList, Image, StyleSheet, ImageSourcePropType, Modal, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -9,9 +12,15 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RadioButton } from 'react-native-paper';
 import CardActions from 'react-native-paper/lib/typescript/components/Card/CardActions'
+import BottomTabs from '../components/Home/BottomTabs'
 
 
 const restaurantType = [
+    {
+        image: require('../assets/images/restaurantType/all.png'),
+        text: 'All',
+        selected: false
+    },
     {
         image: require('../assets/images/restaurantType/asian.png'),
         text: 'Sushi',
@@ -149,6 +158,47 @@ export const localRestaurants = [
         rating: 4.0,
         color: "#5A5FBF"
     },
+    {
+        name: "Pizza Hut",
+        image_url: "https://i.pinimg.com/564x/c6/c0/61/c6c061c5d2f61e9acf174b0ee408254c.jpg",
+        logo: "https://upload.wikimedia.org/wikipedia/sco/thumb/d/d2/Pizza_Hut_logo.svg/2177px-Pizza_Hut_logo.svg.png",
+        categories: ["Pizza", "Italian"],
+        price: "€€€",
+        reviews: 4200,
+        rating: 4.5,
+        color: "#FF9A00"
+        },
+    {
+        name: "KFC",
+        image_url: "https://s3-prod.adage.com/s3fs-public/styles/800x600/public/20220425_KFC_Bucket-For-One_3X2.png",
+        logo: "https://e7.pngegg.com/pngimages/117/377/png-clipart-kfc-logo-kfc-icon-food-kentucky-fried-chicken-thumbnail.png",
+        categories: ["Chicken", "Fast Food"],
+        price: "€€",
+        reviews: 1500,
+        rating: 3.8,
+        color: "#FF4136"
+        },
+    {
+        name: "Mama Pho",
+        image_url: "https://media-cdn.tripadvisor.com/media/photo-s/15/25/3a/6f/pho-stratford.jpg",
+        logo: "https://images.squarespace-cdn.com/content/v1/5bb29c83348cd9266a31cde2/656b2fcf-a790-4418-b114-b19b77598785/Mama+Pho+Logo+082017.png?format=1000w",
+        categories: ["Asian","Vietnamese", "Soup"],
+        price: "€",
+        reviews: 1200,
+        rating: 4.5,
+        color: "#F26E50"
+    },
+    {
+        name: "Sushi Express",
+        image_url: "https://d1ralsognjng37.cloudfront.net/b68b764d-057c-4452-8d0e-846253f5e812",
+        logo: "https://www.clipartmax.com/png/middle/341-3418115_logo-sushi-express-sushi-express.png",
+        categories: ["Japanese", "Sushi", "Asian"],
+        price: "€€",
+        reviews: 1500,
+        rating: 4.5,
+        color: "#00A3FF"
+    },
+
 ];
 
 interface RestaurantItemProps {
@@ -177,10 +227,22 @@ export default function Search(props: RestaurantItemProps) {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     console.log(props.restaurantData)
     const [isModalVisible, setIsModalVisible] = useState(false); 
-    const [selectedType, setSelectedType] = useState("");
-    const onTypePress = (index) => {
-        setSelectedType(index);
+    const [selectedType, setSelectedType] = useState("All");
+    const filteredRestaurants = selectedType === 'All' ? localRestaurants : localRestaurants.filter(restaurant => restaurant.categories.includes(selectedType));
+    const onTypePress = (item) => {
+        if(item.text === 'All'){
+            setSelectedType("All")
+        } else {
+            setSelectedType(item.text);
+        }
     }
+    const [randomMinutes, setRandomMinutes] = useState (5 *(Math.floor(Math.random()  * 10) * 1 + 1));
+    const [locale, setLocale] = useState(Localization.locale);
+    i18n.fallbacks = true;
+    i18n.translations = { en, fr };
+    i18n.locale = locale;
+    i18n.locale = "en";
+    
     return (
         
 
@@ -191,18 +253,17 @@ export default function Search(props: RestaurantItemProps) {
             <ScrollView>
             <View style={{ marginTop: 60 }}>
                 <View style={{ marginHorizontal: 10 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, left: 10 }}>Types of restaurants</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, left: 10 }}>{i18n.t('Typesofrestaurants')}</Text>
                     <FlatList
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         data={restaurantType}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => onTypePress(item)}>
                                 <View style={
                                     styles.itemContainer
-                                    
                                 }>
-                                    <View style={styles.circleBackground}>
+                                    <View style={[ styles.circleBackground, item.text === selectedType ? { borderWidth: 2, borderRadius: 50, borderColor: '#F26E50' } : {}]}>
                                         <Image source={item.image} style={styles.image} />
                                     </View>
                                     <Text style={styles.text}>{item.text}</Text>
@@ -213,44 +274,42 @@ export default function Search(props: RestaurantItemProps) {
                     />
                 </View>
             
-            <View style={{ marginTop: 30, marginHorizontal: 10 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, left: 10 }}>Restaurants</Text>
-                <FlatList
-                    data={localRestaurants}
-                    keyExtractor={(item, index) => item.name}
-                    
-                    contentContainerStyle={{ paddingHorizontal: 15, paddingVertical: 10 }}
-                    renderItem={({ item }) => (
-                        <View style={{ backgroundColor: 'white', height: 250, marginBottom: 15, padding: 15, borderRadius: 15, borderColor: 'grey' }} onPress={() => navigation.navigate('RestaurantDetail')}>
-                            <Image
-                                source={{ uri: item.image_url }}
-                                style={{ borderRadius: 15, width: 350, height: 150 }}
-                            />
-                            <View style={{ position: 'absolute', top: 10, left: 10 }}>
+                <View style={{ marginTop: 30, marginHorizontal: 10 }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, left: 10 }}>Restaurants</Text>
+                    <FlatList
+                        data={filteredRestaurants}
+                        keyExtractor={(item, index) => item.name}
+                        
+                        contentContainerStyle={{ paddingHorizontal: 15, paddingVertical: 10 }}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('RestaurantDetail', {restaurantId: item.id})}>
+                            <View style={{ backgroundColor: 'white', height: 250, marginBottom: 15, padding: 15, borderRadius: 15, borderColor: 'grey' }}>
+                                <Image
+                                    source={{ uri: item.image_url }}
+                                    style={{ borderRadius: 15, width: 350, height: 150 }}
+                                />
+                                <View style={{ position: 'absolute', top: 10, left: 10 }}>
                                 <View style={{ backgroundColor: 'white', padding: 10, left: 15, top: 10, borderRadius: 10, width: 80, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                                     <FontAwesome5 name="star" size={15} color={'orange'} solid/>
                                     <Text style={{ fontSize: 16 }}>{item.reviews}</Text>
                                 </View>
-                            </View>
-                            <Text style={{ fontSize: 19, fontWeight: 'bold', marginTop: 10, left: 10 }}>{item.name}</Text>
-                            <Text style={{ fontSize: 15, marginTop: 10, left: 10 }}>{item.categories.join(', ')}</Text>
-                            <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
-                                <View style={{ backgroundColor: 'white', padding: 5, borderRadius: 15, flexDirection: 'row', borderColor: 'grey', borderWidth: 0.2, width: 90, justifyContent: 'center', alignItems: 'center' }}>
-                                    <FontAwesome5 name="timer" size={15} color={'red'} />
-                                    <Text>30 min</Text>
                                 </View>
-                            </View>
-                        </View>
-                    )}
-                />
-
-            </View>
+                                <Text style={{ fontSize: 19, fontWeight: 'bold', marginTop: 10, left: 10 }}>{item.name}</Text>
+                                <Text style={{ fontSize: 15, marginTop: 10, left: 10 }}>{item.categories.join(', ')}</Text>
+                                <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
+                                <View style={{ backgroundColor: 'white', padding: 5, borderRadius: 15, flexDirection: 'row', borderColor: 'grey', borderWidth: 0.2, width: 90, justifyContent: 'center', alignItems: 'center' }}>
+                                    <FontAwesome5 name="clock" size={15} color={'red'} />
+                                    <Text>{randomMinutes} mins</Text>
+                                </View>
+                                </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </View>
             </View>
             </ScrollView>
-            {/* Modal */}
-            <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-            <Text>Filter</Text>
-        </TouchableOpacity>
+            <BottomTabs />
     </View>
 );    
 

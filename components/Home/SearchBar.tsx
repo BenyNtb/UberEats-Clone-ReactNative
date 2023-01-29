@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Divider, RadioButton } from 'react-native-paper';
-
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 
 
@@ -27,7 +27,7 @@ const restaurantType = [
     },
     {
         image: require('../../assets/images/restaurantType/mexican.png'),
-        text: 'mexican',
+        text: 'Mexican',
         selected: false
     },
     {
@@ -93,23 +93,22 @@ export default function SearchBar({cityHandler} : {
 
     const [selectedTypes, setSelectedTypes] = useState([]);
 
-const handleTypePress = (index) => {
-    let updatedTypes = [...restaurantType];
-    updatedTypes[index].selected = !updatedTypes[index].selected;
-    setSelectedTypes(updatedTypes);
-    if(selectedTypes.includes(updatedTypes[index].text)){
-        const filtered = selectedTypes.filter(item => item !== updatedTypes[index].text)
-        setSelectedTypes(filtered)
-    }else{
-        setSelectedTypes([...selected, updatedTypes[index].text])
+    const handleTypePress = (index) => {
+        const updatedTypes = [...selectedTypes];
+        if(updatedTypes.includes(restaurantType[index].text)){
+            const filtered = updatedTypes.filter(item => item !== restaurantType[index].text)
+            setSelectedTypes(filtered)
+        }else{
+            setSelectedTypes([...updatedTypes, restaurantType[index].text])
+        }
     }
-    }
+    
     
     const handleCheck = (item: any) => {
         const newData = [...restaurantType];
         const index = newData.indexOf(item);
         newData[index].checked = !newData[index].checked;
-        restaurantType(newData);
+        setSelectedTypes(newData);
         }
     //function to handle the checkbox
     const handleRadio = (name: string) => {
@@ -135,6 +134,8 @@ const handleTypePress = (index) => {
         cityHandler: any,
         modalToggle: any
     })
+
+    
 
     return (
         <>
@@ -196,7 +197,6 @@ const handleTypePress = (index) => {
                         onRequestClose={() => {
                             setIsModalVisible(false);
                         }}
-                        style={{ }}
                     >
                         <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                             <View style={{ width: '100%', backgroundColor: '#F7F7F7', borderRadius: 25, padding: 20, top: 90 }}>
@@ -234,12 +234,13 @@ const handleTypePress = (index) => {
                                 <FlatList
                                     numColumns={4}
                                     data={restaurantType}
+                                    keyExtractor={(item, index) => index.toString()}
                                     renderItem={({ item }) => (
                                     <TouchableOpacity
-                                    style={[styles.itemContainer, item.checked ? { borderWidth: 2, borderColor: '#5666BF' } : {}]}
+                                    style={styles.itemContainer}
                                     onPress={() => handleCheck(item)}
                                 >
-                                <View style={styles.circleBackground}>
+                                <View style={[styles.circleBackground,item.checked ? { borderWidth: 2, borderColor: '#F26E50' } : {} ]}>
                                 <Image source={item.image} style={styles.image} />
                                 </View>
                                 <Text style={styles.text}>{item.text}</Text>

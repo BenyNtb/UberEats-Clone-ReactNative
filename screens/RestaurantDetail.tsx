@@ -6,6 +6,7 @@ import MenuItems from '../components/RestaurantDetail/MenuItems';
 import ViewCart from '../components/RestaurantDetail/ViewCart';
 import { NativeBaseProvider } from 'native-base';
 import Search from './Search';
+import { useState } from 'react';
 
 
 const foods = [
@@ -70,7 +71,7 @@ interface MenuItemsProps {
 export default function RestaurantDetail(props: React.PropsWithChildren<RestaurantDetailProps>) {
   // console.log('route props: ', props.route)
   const restaurantName = props.route?.params?.name;
-
+  const [cartItems, setCartItems] = useState([]);
   const { route } = props;
   const { params } = route;
   const requiredProps = ['name', 'image', 'price', 'reviews', 'rating', 'categories'];
@@ -86,12 +87,14 @@ export default function RestaurantDetail(props: React.PropsWithChildren<Restaura
     // const restaurantName = route?.params?.name;
 
   return (
-    <ScrollView>
-      <About route={route} />
-      <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
-      <ViewCart navigation={props.navigation} />
-      {/* <Search/> */}
-    </ScrollView>
+    <>
+      <ScrollView>
+        <About route={route} />
+        <MenuItems restaurantName={restaurantName} checkboxValue={''} foods={foods}  />
+        {/* <Search/> */}
+      </ScrollView>
+      <ViewCart navigation={props.navigation}  />
+    </>
   );
 }
 

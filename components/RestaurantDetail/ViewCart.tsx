@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
 import LottieView from 'lottie-react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { BlurView } from "@react-native-community/blur";
+
 
 interface Item {
     title: string;
@@ -36,7 +39,6 @@ export default function ViewCart({ navigation }: { navigation: any }) {
     });
     console.log(totalUSD);
     // console.log(items)
-
     
     const handleConfirmOrder = () => {
         if (loading) {
@@ -62,7 +64,7 @@ export default function ViewCart({ navigation }: { navigation: any }) {
         modalCheckoutContainer: {
             backgroundColor: 'white',
             padding: 16,
-            height: 500,
+            height: '100%',
             borderWidth: 1,
         },
         restaurantName: {
@@ -70,6 +72,7 @@ export default function ViewCart({ navigation }: { navigation: any }) {
             fontWeight: '600',
             fontSize: 18,
             marginBottom: 10,
+            bottom: 40,
         },
         subtotalContainer: {
             flexDirection: 'row',
@@ -89,53 +92,77 @@ export default function ViewCart({ navigation }: { navigation: any }) {
             <>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalCheckoutContainer}>
-                        <Text style={styles.restaurantName}>{restaurantName}</Text>
+                        <SafeAreaView>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: 'white',
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 30,
+                                    padding: 10,
+                                    alignItems: 'center',
+                                    right: 10,
+                                }}
+                                onPress={() => navigation.goBack('MenuItems')}
+                                >
+                                <FontAwesome5
+                                    name='chevron-left'
+                                    size={30}
+                                />
+                            </TouchableOpacity>
+                            <Text style={styles.restaurantName}>Checkout</Text>
+                        </SafeAreaView>
                         { items.map((item, index) => (
                             <OrderItem key={index} item={item} />
                         ))}
-                        <View style={styles.subtotalContainer}>
+                        {/* <View style={styles.subtotalContainer}>
                             <Text style={styles.subtotalText}>Subtotal</Text>
                             <Text>{totalUSD}</Text>
-                        </View>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center'
-                        }}
-                        >
-                            <TouchableOpacity style={{
-                                marginTop: 20,
-                                backgroundColor: 'black',
-                                alignItems: 'center',
-                                padding: 13,
-                                borderRadius: 30,
-                                width: 300,
-                                position: "relative"
+                        </View> */}
+                        {/* <BlurView blurType='light' > */}
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'center'
                             }}
-                            onPress={() => {
-                                handleConfirmOrder();
-                                setModalVisible(false);
-                            }}
-
                             >
-                                <Text style={{
-                                    color: 'white',
-                                    fontSize: 20,
+                                <TouchableOpacity style={{
+                                    bottom: 150,
+                                    backgroundColor: '#333544',
+                                    alignItems: 'center',
+                                    padding: 13,
+                                    borderRadius: 15,
+                                    height: 70,
+                                    width: 300,
+                                    position: "relative"
                                 }}
-                                >
-                                    Checkout 
-                                </Text>
-                                <Text style={{
-                                    position: 'absolute',
-                                    right: 20,
-                                    color: 'white',
-                                    fontSize: 15,
-                                    top: 17,
+                                onPress={() => {
+                                    handleConfirmOrder();
+                                    setModalVisible(false);
                                 }}
+
                                 >
-                                    {total ? totalUSD : ''}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: 18,
+                                        paddingRight: 60,
+                                        top: 10,
+                                    }}
+                                    >
+                                        Confirm Order - 
+                                    </Text>
+                                    <Text style={{
+                                        position: 'absolute',
+                                        right: 55,
+                                        color: 'white',
+                                        fontSize: 18,
+                                        top: 23,
+                                    }}
+                                    >
+                                        {total ? totalUSD : ''}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        {/* </BlurView> */}
                     </View>
                 </View>
             </>
@@ -148,7 +175,7 @@ export default function ViewCart({ navigation }: { navigation: any }) {
                 animationType='slide'
                 visible={modalVisible}
                 transparent={true}
-                onRequestClose={() => setModalVisible(false)}
+                onDismiss={() => setModalVisible(false)}
                 >
                     {checkoutModalContent()}
             </Modal>
@@ -159,7 +186,8 @@ export default function ViewCart({ navigation }: { navigation: any }) {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: 130,
+                top: 820,
+                width: 500,
                 zIndex: 999,
             }}>
                 <View style={{
@@ -167,29 +195,68 @@ export default function ViewCart({ navigation }: { navigation: any }) {
                     justifyContent: 'center',
                     width: '100%',
                 }}>
-                    <TouchableOpacity style={{
-                    marginTop: 20,
-                    backgroundColor: 'black',
+                    <View style={{
+                    marginTop: 10,
+                    backgroundColor: 'white',
                     alignItems: 'center',
                     flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'center',
                     padding: 15,
                     borderRadius: 30,
-                    width: 300,
+                    width: 500,
+                    height: 100,
                     position: 'relative',
                     }}
-                    onPress={() => setModalVisible(true)}
+                    // onPress={() => setModalVisible(true)}
                     >
-                        <Text style={{ color: 'white', fontSize: 20, marginRight: 30 }}>
-                            View Cart
+                        <Text style={{ color: 'black', fontSize: 20,  justifyContent: 'center', alignItems: 'center', fontWeight: '600', marginHorizontal: 5 }}>
+                            Order {items.length} for 
                         </Text>
                         <Text
                         style={{
-                            color: 'white',
+                            color: 'black',
                             fontSize: 20,
+                            fontWeight: '600'
                         }}>
                             {totalUSD}
                         </Text>
+                    </View>
+                    <View
+                        style={{
+                            backgroundColor: '#E8EBFA',
+                            width: 50,
+                            height: 50,
+                            borderRadius: 10,
+                            // padding: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'row',
+                            right: 420,
+                            top: 35,
+                        }}
+                        >
+                        <Text style={{ color : '#6468B2', fontSize: 20, fontWeight: 'bold' }}>
+                            {items.length}
+                        </Text>
+                    </View>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: '#373648',
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            padding: 10,
+                            alignItems: 'center',
+                            right: 150,
+                            top: 35,
+                        }}
+                        onPress={() => setModalVisible(true)}
+                        >
+                        <FontAwesome5
+                            name='chevron-right'
+                            size={30}
+                            color='white'
+                        />
                     </TouchableOpacity>
                 </View>
             </View>

@@ -1,11 +1,14 @@
+import i18n from 'i18n-js';
+import { en, fr } from "../localizations";
+import * as Localization from "expo-localization";
 import { View, Text, Pressable, ScrollView, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar, Badge, Box, Flex, HStack, NativeBaseProvider, Spacer } from "native-base";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { Divider } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
-import { Banner } from 'react-native-paper';
+import { Banner, Button } from 'react-native-paper';
 import BottomTabs from '../components/Home/BottomTabs';
 
 
@@ -61,6 +64,15 @@ const avatarAccount = () => {
 
 export default function Account() {
     const [visible, setVisible] = React.useState(true);
+    const [locale, setLocale] = useState<string>(i18n.locale);
+    i18n.fallbacks = true;
+    i18n.translations = { en, fr };
+    i18n.locale = locale;
+    i18n.locale = "en";
+    useEffect(() => {
+        console.log(`Locale changed to: ${locale}`);
+        i18n.locale = locale;
+      }, [locale]);
     return (
         <View>
         <SafeAreaView>
@@ -121,7 +133,7 @@ export default function Account() {
                     />
                 )}>
                 <Text style={{ color: '#204f13', fontWeight: 'bold' }}>
-                    Invite friends and pay less {"\n"} {"\n"}
+                    {i18n.t('InviteFriends')} {"\n"} {"\n"}
                 </Text>
                 
                 <Text
@@ -131,7 +143,7 @@ export default function Account() {
                         color: '#77877C'
                     }}
                 >
-                    Invite a friend and earn free credits with {"\n"} their first order.
+                    {i18n.t('InviteFriends')} {"\n"} {i18n.t('TheirFirstOrder')}.
                 </Text>
                 <FontAwesome5
                     name='chevron-right'
@@ -159,7 +171,7 @@ export default function Account() {
                         color: 'grey'
                     }}
                     >
-                        General
+                        {i18n.t('General')}
                     </Text>
                     <Icon icon='user' text='My Account' iconStyle={{ alignSelf: 'center', padding: 10 }}  /> 
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 1, marginTop: -15 }}/>
@@ -184,9 +196,21 @@ export default function Account() {
                             color: 'grey'
                         }}
                     >
-                        Settings
+                        {i18n.t('Settings')}
                     </Text>
+                    { locale !== 'en' ? (
+                        <Button mode="contained" onPress={() => setLocale('en')}>
+                        Switch to English
+                        </Button>
+                    ) : undefined }
+                    { locale !== 'fr' ? (
+                        <Button mode="contained" onPress={() => setLocale('fr')}>
+                        Switch to French
+                        </Button>
+                    ) : undefined }
+
                     <Icon icon='globe' text='Language' />
+
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
                     <Icon icon='lightbulb' text='Dark Mode' />
                 </View>
