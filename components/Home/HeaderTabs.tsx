@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Banner } from 'react-native-paper';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import { LocalizationContext } from '../../LocalizationContext';
 
 // const { t } = i18n;
 
@@ -27,11 +28,12 @@ const Icon = (props: { icon: string; onPress?: () => void }) => (
 )
 
 const SearchBanner = () => {
-  const [locale, setLocale] = useState(Localization.locale);
-  i18n.fallbacks = true;
-  i18n.translations = { en, fr };
-  i18n.locale = locale;
-  i18n.locale = "en";
+  // const [locale, setLocale] = useState(Localization.locale);
+  // i18n.fallbacks = true;
+  // i18n.translations = { en, fr };
+  // i18n.locale = locale;
+  // i18n.locale = "en";
+  const {locale, setLocale} = React.useContext(LocalizationContext);
   
   return (
       <Banner
@@ -75,10 +77,11 @@ const SearchBanner = () => {
 };
 
 
-export default function HeaderTabs({cityHandler} : { cityHandler: any }) {
+export default function HeaderTabs(props: any ) {
+  const { cityHandler, name } = props;
   const [slideAnim] = useState(new Animated.Value(0));
   const [isSlide, setIsSlide] = useState(false);
-
+  console.log(name, 'the name you are looking for')
   const toggleSearch = () => {
     if (isSlide) {
       Animated.timing(slideAnim, {
@@ -98,17 +101,18 @@ export default function HeaderTabs({cityHandler} : { cityHandler: any }) {
       setIsSlide(true);
     }
   }
-  const [locale, setLocale] = useState(Localization.locale);
+  // const [locale, setLocale] = useState(Localization.locale);
   
-  i18n.fallbacks = true;
-  i18n.translations = { en, fr };
-  i18n.locale = locale;
-  i18n.locale = "en";
+  // i18n.fallbacks = true;
+  // i18n.translations = { en, fr };
+  // i18n.locale = locale;
+  // i18n.locale = "en";
+  const {locale, setLocale} = React.useContext(LocalizationContext);
 
   return (
     <>
       <View style={{ left: 20 }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{i18n.t('Hello')} Megan👋</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{i18n.t('Hello')} {name}👋</Text>
         <Text style={{ fontWeight: '500' }}>{i18n.t('Delivering')}</Text>
       </View>
         <Icon icon='search' onPress={toggleSearch} />
@@ -126,7 +130,7 @@ export default function HeaderTabs({cityHandler} : { cityHandler: any }) {
           }}
         >
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: '#fff', width: '90%', height: '50%', borderRadius: 20 }}>
+            <View style={{ backgroundColor: '#fff', width: '110%', height: '100%', borderRadius: 20, bottom: 210 }}>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <GooglePlacesAutocomplete
                 placeholder='Search Restaurants'
@@ -146,13 +150,13 @@ export default function HeaderTabs({cityHandler} : { cityHandler: any }) {
                     fontWeight: '400',
                     marginTop: 7,
                     height: 70,
-                    left: 10,
+                    left: 20,
                     justifyContent: 'center',
                     alignContent: 'center',
                     fontSize: 18,
                     paddingLeft: 50,
                     borderWidth: 1,
-                    borderColor: '#F26E50',
+                    borderColor: '#5A5FBF',
                 },
                 textInputContainer: {
                     borderRadius: 20,
@@ -160,8 +164,18 @@ export default function HeaderTabs({cityHandler} : { cityHandler: any }) {
                     alignItems: 'center',
                     marginRight: 10,
                     width: 320,
-                    bottom: 40
-                }
+                    bottom: 0
+                },
+                // listView: {
+                //   top: 130,
+                //   zIndex: 1,
+                // }, 
+                container: {
+                  top: 200,
+                  zIndex: 999,
+                  
+
+                },
                 }}
               />
               </View>

@@ -10,6 +10,7 @@ import { Divider } from 'react-native-elements';
 import { color } from 'react-native-reanimated';
 import { Banner, Button } from 'react-native-paper';
 import BottomTabs from '../components/Home/BottomTabs';
+import { LocalizationContext } from '../LocalizationContext';
 
 
 const avatarAccount = () => {
@@ -27,52 +28,56 @@ const avatarAccount = () => {
 }
 
 
-    const Icon =(props: {text: string, icon: string}) => (
-        <NativeBaseProvider>
-            <HStack>
-                <FontAwesome5
-                    name={props.icon}
-                    size={25}
-                    style={{
-                        alignSelf: 'center',
-                        color: '#A3D9B6',
-                        width: 50,
-                        height: 50,
-                        borderRadius: 25,
-                        overflow: 'hidden',
-                        backgroundColor: '#e1f3e8',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                />
-                <Text style={{ alignSelf: 'center', fontWeight: 'bold', marginLeft: 10, top: 10 }}>{props.text}</Text>
-            </HStack>
-            <FontAwesome5
-                name='chevron-right'
-                size={20}
-                style={{
-                    alignSelf: 'flex-end',
-                    color: 'lightgrey',
-                    marginBottom: 10,
-                    bottom: 20,
-                }}
-            />
-        </NativeBaseProvider>
-    )
+const Icon = (props: {text: string, icon: string}) => (
+    <NativeBaseProvider>
+      <HStack style={{justifyContent: 'flex-start'}}>
+        <View style={{
+          backgroundColor: '#e1f3e8',
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          overflow: 'hidden',
+          justifyContent: 'center',
+        }}>
+          <FontAwesome5
+            name={props.icon}
+            size={25}
+            style={{
+              alignSelf: 'center',
+              color: '#A3D9B6',
+            }}
+          />
+        </View>
+        <Text style={{ alignSelf: 'center', fontWeight: 'bold', marginLeft: 10, top: 10 }}>{props.text}</Text>
+      </HStack>
+      <FontAwesome5
+        name='chevron-right'
+        size={20}
+        style={{
+          alignSelf: 'flex-end',
+          color: 'lightgrey',
+          marginBottom: 10,
+          bottom: 20,
+        }}
+      />
+    </NativeBaseProvider>
+  );
+  
 
 
 
 export default function Account() {
     const [visible, setVisible] = React.useState(true);
-    const [locale, setLocale] = useState<string>(i18n.locale);
+    const { locale, setLocale } = React.useContext(LocalizationContext);
     i18n.fallbacks = true;
     i18n.translations = { en, fr };
     i18n.locale = locale;
-    i18n.locale = "en";
-    useEffect(() => {
-        console.log(`Locale changed to: ${locale}`);
-        i18n.locale = locale;
-      }, [locale]);
+
+    const handleSwitchToFrench = () => {
+    setLocale('fr');
+    };
+
+    
     return (
         <View>
         <SafeAreaView>
@@ -173,11 +178,11 @@ export default function Account() {
                     >
                         {i18n.t('General')}
                     </Text>
-                    <Icon icon='user' text='My Account' iconStyle={{ alignSelf: 'center', padding: 10 }}  /> 
+                    <Icon icon='user' text={i18n.t('MyAccount')} iconStyle={{ alignSelf: 'center', padding: 10 }}  /> 
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 1, marginTop: -15 }}/>
-                    <Icon icon='home' text='Address' />
+                    <Icon icon='home' text={i18n.t('Address')} />
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
-                    <Icon icon='money-check' text='Billing/Payment' />
+                    <Icon icon='money-check' text={i18n.t('Billing')} />
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
                 </View>
                 <View     
@@ -209,13 +214,11 @@ export default function Account() {
                         </Button>
                     ) : undefined }
 
-                    <Icon icon='globe' text='Language' />
-
                     <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
-                    <Icon icon='lightbulb' text='Dark Mode' />
+
                 </View>
             </ScrollView>
-            <View style={{ bottom: 30, height: 300 }}>
+            <View style={{ bottom: -50, height: 300 }}>
                 <BottomTabs />
             </View>
         </View>

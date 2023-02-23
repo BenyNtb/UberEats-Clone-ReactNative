@@ -1,5 +1,6 @@
 declare module 'i18n-js' {
     export interface I18n {
+      numberToCurrency(price: any, arg1: { unit: string; separator: string; delimiter: string; format: string; }): unknown;
       fallbacks: boolean;
       translations: { en: { 
         Hello: string; 
@@ -34,7 +35,29 @@ declare module 'i18n-js' {
         AddProduct: string; 
         DeliveryAddress: string; 
         PaymentMethod: string; 
-        ConfirmOrder: string; 
+        ConfirmOrder: string;
+        Reorder: string;
+        Date: string; 
+        Price: string; 
+        Profile: string;
+        MyAccount: string;
+        Address: string;
+        Billing: string;
+        Asian: string;
+        Vegetarian: string;
+        Mexican: string;
+        Chicken: string;
+        Fish: string;
+        Breakfast: string;
+        Salad: string;
+        IceCream: string;
+        Beverages: string;
+        Filter: string;
+        SortBy: string;
+        Rating: string;
+        DeliveryTime: string;
+        DeliveryPrice: string;
+        Clear: string;
       }; 
       
       fr: { 
@@ -70,7 +93,30 @@ declare module 'i18n-js' {
         AddProduct: string;
         DeliveryAddress: string;
         PaymentMethod: string; 
-        ConfirmOrder: string; }; };
+        ConfirmOrder: string;
+        Reorder: string;
+        Date: string; 
+        Price: string; 
+        Profile: string;
+        MyAccount: string;
+        Address: string;
+        Billing: string;
+        Asian: string;
+        Vegetarian: string;
+        Mexican: string;
+        Chicken: string;
+        Fish: string;
+        Breakfast: string;
+        Salad: string;
+        IceCream: string;
+        Beverages: string;
+        Filter: string;
+        SortBy: string;
+        Rating: string;
+        DeliveryTime: string;
+        DeliveryPrice: string;
+        Clear: string;
+      }; };
       locale: string;
       t(key: string, options?: any): string;
     }

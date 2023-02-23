@@ -3,7 +3,7 @@ import { en, fr } from "../../localizations";
 import * as Localization from "expo-localization";
 import { View, Text, FlatList, Image, ScrollView } from 'react-native'
 import React, { useState } from 'react'
-import { Card } from 'react-native-elements'
+import { LocalizationContext } from '../../LocalizationContext';
 
 const items = [
     {
@@ -13,7 +13,7 @@ const items = [
     },
     {
         image: require('../../assets/images/asian.png'),
-        text: 'Asian',
+        text: i18n.t('Asian'),
         color: '#9FD6B7'
     },
     {
@@ -33,20 +33,29 @@ const items = [
     },
     {
         image: require('../../assets/images/vegetarian.png'),
-        text: 'Vegetarian',
+        text: i18n.t('Vegetarian'),
         color: '#8E9BAE'
     }
 ];
 
 
 export default function Categories() {
-  const [locale, setLocale] = useState(Localization.locale);
-  i18n.fallbacks = true;
-  i18n.translations = { en, fr };
-  i18n.locale = locale;
-  i18n.locale = "en";
+  // const [locale, setLocale] = useState(Localization.locale);
+  // i18n.fallbacks = true;
+  // i18n.translations = { en, fr };
+  // i18n.locale = locale;
+  // i18n.locale = "en";
+  const { locale, setLocale } = React.useContext(LocalizationContext);
+i18n.fallbacks = true;
+i18n.translations = { en, fr };
+i18n.locale = locale;
+
+const handleSwitchToFrench = () => {
+  setLocale('fr');
+};
+
     return (
-      <View style={{ marginHorizontal: 20}}>
+      <View style={{ marginHorizontal: 20 }}>
         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('PopularCategories')}</Text>
         <FlatList
           horizontal={true}

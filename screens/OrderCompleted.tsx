@@ -72,7 +72,7 @@ export default function OrderCompleted() {
                     marginBottom: 30,
                     }}
                     autoPlay
-                    speed={0.5}
+                    speed={1}
                     loop={false}
                     source = {require('../assets/animations/check-mark.json')}
                 />
@@ -90,12 +90,12 @@ export default function OrderCompleted() {
                         marginLeft={10} restaurantName={''} checkboxValue={false}
                     />
                     <LottieView  style={{
-                        height: 100,
+                        height: 200,
                         alignSelf: 'center',
                         marginBottom: 30,
                     }}
                     autoPlay
-                    speed={0.5}
+                    speed={1}
                     source = {require('../assets/animations/cooking.json')}
                     />
                 </ScrollView>

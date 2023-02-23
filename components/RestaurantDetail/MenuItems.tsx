@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 });
 
 interface Item {
+  id: any;
   title: string;
   description: string;
   price: string;
@@ -87,35 +88,46 @@ export default function MenuItems({ foods, restaurantName, hideCheckbox, marginL
       Boolean(cartItems.find((item: any) => item.title === _food.title));
   
   const [isChecked, setIsChecked] = useState(false);
-  const selectedItems = cartItems.filter((item: any) => item.restaurantName === restaurantName);
+  const selectedItem = cartItems.filter((item: any) => item.restaurantName === restaurantName);
   
   const [quantity, setQuantity] = useState(0);
-  
+  const [checkboxPressed, setCheckboxPressed] = useState(false);
+
   const handleCheckboxPress = (item: Item) => {
+    setCheckboxPressed(!checkboxPressed);
+    if (checkboxPressed) {
       LayoutAnimation.configureNext({
-          duration: 500,
-          update: {
-              type: LayoutAnimation.Types.easeInEaseOut
-          }
+        duration: 500,
+        update: {
+          type: LayoutAnimation.Types.easeInEaseOut
+        }
       });
-  
-      setIsChecked(!isChecked);
-      setQuantity(prevQuantity => prevQuantity + 1);
-      selectItem(item, true, quantity + 1);
+    }
+    setIsChecked(!isChecked);
+    setQuantity(prevQuantity => prevQuantity + 1);
+    selectItem(item, true, quantity + 1);
   };
+  
+  
+  
   
   const handleTrashPress = (item: Item) => {
-      LayoutAnimation.configureNext({
-          duration: 500,
-          update: {
-              type: LayoutAnimation.Types.easeInEaseOut
-          }
-      });
+    LayoutAnimation.configureNext({
+        duration: 500,
+        update: {
+            type: LayoutAnimation.Types.easeInEaseOut
+        }
+    });
+    setQuantity(quantity - 1);
+    if (quantity <= 1) {
       setIsChecked(false);
-      setQuantity(0);
-      selectItem(item, true, quantity - 1);
+    }
+    selectItem(item, true, quantity - 1);
+    if (quantity === 0) {
       dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+    }
   };
+  
   
   const handlePlusPress = (item: Item) => {
       setQuantity(quantity + 1);
@@ -192,32 +204,34 @@ export default function MenuItems({ foods, restaurantName, hideCheckbox, marginL
                     onPress={() => handleCheckboxPress(food)}
                   />
                 </View>
-                {isChecked && (
-      <View style={{backgroundColor: '#F8F8F8', width: 370, height: 90, bottom: 25, left: 28, zIndex: -1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
-        <View style={{  flexDirection: 'row',  top: 30 }}>
-          <Text style={{ color: 'red', marginHorizontal: 10, fontWeight: 'bold' }}> {quantity}X </Text>
-          <View style={{ flexDirection: 'column' }}>
-            <Text style={{ fontWeight: 'bold' }}>{food.title}</Text>
-            <Text>{food.price}</Text>
-          </View>
-        </View>
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', left: 230, width: 130, height: 45, backgroundColor: 'white', borderRadius: 20, borderColor: '#F2F2F2', borderWidth: 2 }}>
-          <View style={{ width: 30, height: 30, backgroundColor: '#ECB5B1', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
-            <FontAwesome5 name='trash' color='red' size={15} onPress={() => handleTrashPress(food)} />
-          </View>
-            <Text style={{ fontSize: 18, top: 5 }}>
-              {quantity}
-            </Text>
-            <View style={{ width: 30, height: 30, backgroundColor: '#DBE2F5', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
-              <FontAwesome5 name='plus' color='#5A5FBF' size={15} light onPress={() => handlePlusPress(food)} />
-            </View>
-          </View>
+                {isChecked && selectedItem.find((item: any) => item.title === food.title) ? (
+                <View style={{backgroundColor: '#F8F8F8', width: 370, height: 90, bottom: 25, left: 28, zIndex: -1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+                  <View style={{  flexDirection: 'row',  top: 30 }}>
+                    <Text style={{ color: 'red', marginHorizontal: 10, fontWeight: 'bold' }}> {quantity}X </Text>
+                    <View style={{ flexDirection: 'column' }}>
+                      <Text style={{ fontWeight: 'bold' }}>{food.title}</Text>
+                      <Text>{food.price}</Text>
+                    </View>
+                  </View>
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', left: 230, width: 130, height: 45, backgroundColor: 'white', borderRadius: 20, borderColor: '#F2F2F2', borderWidth: 2 }}>
+                    <View style={{ width: 30, height: 30, backgroundColor: '#ECB5B1', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
+                      <FontAwesome5 name='trash' color='red' size={15} onPress={() => handleTrashPress(food)} />
+                    </View>
+                      <Text style={{ fontSize: 18, top: 5 }}>
+                        {quantity}
+                      </Text>
+                      <View style={{ width: 30, height: 30, backgroundColor: '#DBE2F5', borderRadius: 50, justifyContent: 'center', alignItems: 'center', top: 5, marginHorizontal: 5 }} >
+                        <FontAwesome5 name='plus' color='#5A5FBF' size={15} light onPress={() => handlePlusPress(food)} />
+                      </View>
+                    </View>
+                    </View>
+                     ) : (
+                      <></>
+                    )}
                 </View>
-              )}
-            </View>
-          </View>
-        );
-      })}
+              </View>
+            );
+          })}
       </ScrollView>
     </ScrollView>
   );

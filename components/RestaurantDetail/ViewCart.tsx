@@ -71,7 +71,7 @@ export default function ViewCart({ navigation }: { navigation: any }) {
             textAlign: 'center',
             fontWeight: '600',
             fontSize: 18,
-            marginBottom: 10,
+            marginBottom: -15,
             bottom: 40,
         },
         subtotalContainer: {
@@ -93,40 +93,40 @@ export default function ViewCart({ navigation }: { navigation: any }) {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalCheckoutContainer}>
                         <SafeAreaView>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: 'white',
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: 30,
-                                    padding: 10,
-                                    alignItems: 'center',
-                                    right: 10,
-                                }}
-                                onPress={() => navigation.goBack('MenuItems')}
-                                >
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                width: 70,
+                                height: 70,
+                                borderRadius: 30,
+                                padding: 10,
+                                alignItems: 'center',
+                                right: 10,
+                            }}
+                            onPress={() => navigation.goBack()}
+                        >
+                            <View>
                                 <FontAwesome5
                                     name='chevron-left'
                                     size={30}
                                 />
-                            </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                             <Text style={styles.restaurantName}>Checkout</Text>
                         </SafeAreaView>
                         { items.map((item, index) => (
                             <OrderItem key={index} item={item} />
                         ))}
-                        {/* <View style={styles.subtotalContainer}>
-                            <Text style={styles.subtotalText}>Subtotal</Text>
-                            <Text>{totalUSD}</Text>
-                        </View> */}
-                        {/* <BlurView blurType='light' > */}
+                        
                             <View style={{
                                 flexDirection: 'row',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                position: 'absolute',
+                                right: 65,
                             }}
                             >
                                 <TouchableOpacity style={{
-                                    bottom: 150,
+                                    top: 820,
                                     backgroundColor: '#333544',
                                     alignItems: 'center',
                                     padding: 13,
@@ -162,7 +162,6 @@ export default function ViewCart({ navigation }: { navigation: any }) {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                        {/* </BlurView> */}
                     </View>
                 </View>
             </>

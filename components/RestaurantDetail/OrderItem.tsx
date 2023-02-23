@@ -1,7 +1,7 @@
 import { View, Text, LayoutAnimation, Image, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { Banner } from 'react-native-paper';
@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     },
 })
 
+interface RootState {
+    cartReducer: {
+      selectedItems: {
+          items: Item[];
+      };
+    };
+  }
 
 
 export default function OrderItem({item}: {item: any}) {
@@ -33,11 +40,19 @@ export default function OrderItem({item}: {item: any}) {
     const dispatch = useDispatch();
     const [isChecked, setIsChecked] = useState(false);
     const [quantity, setQuantity] = useState(0);
-    const handleCheckboxPress = (item: Item) => {
-        setIsChecked(!isChecked);
-        setQuantity(prevQuantity => prevQuantity + 1);
-        selectItem(item, true, quantity + 1);
-    };
+    // const handleCheckboxPress = (item: Item) => {
+    //     setIsChecked(!isChecked);
+    //     setQuantity(prevQuantity => prevQuantity + 1);
+    //     selectItem(item, true, quantity + 1);
+    // };
+    const {items, restaurantName} = useSelector((state: RootState) => state.cartReducer.selectedItems);
+    const total = items.map((item: { price: string; }) => 
+    item.price ? Number(item.price.replace("$", "")) : 0
+    ).reduce((prev: any, curr: any) => prev + curr, 0);
+    const totalUSD = total.toLocaleString("en", {
+        style: "currency",
+        currency: "USD",
+    });
     
     const handleTrashPress = (item: Item) => {
         LayoutAnimation.configureNext({
@@ -46,11 +61,16 @@ export default function OrderItem({item}: {item: any}) {
                 type: LayoutAnimation.Types.easeInEaseOut
             }
         });
-        setIsChecked(false);
-        setQuantity(0);
+        setQuantity(quantity - 1);
+        if (quantity <= 1) {
+            setIsChecked(false);
+        }
         selectItem(item, true, quantity - 1);
-        dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+        if (quantity === 0) {
+            dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+        }
     };
+
     
     const handlePlusPress = (item: Item) => {
         setQuantity(quantity + 1);
@@ -96,11 +116,11 @@ export default function OrderItem({item}: {item: any}) {
                     marginHorizontal: 10, 
                     fontWeight: 'bold' 
                     }}> 
-                    {quantity}X
+                    {items.length}X
                 </Text>
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={{ fontWeight: 'bold' }}>{title}</Text>
-                    <Text>{price}</Text>
+                    <Text>{totalUSD}</Text>
                 </View>
                 </View>
                 <View style={{ 
@@ -130,7 +150,7 @@ export default function OrderItem({item}: {item: any}) {
                         <FontAwesome5 name='trash' color='red' size={15} onPress={() => handleTrashPress(item)} />
                     </View>
                     <Text style={{ fontSize: 18, top: 5 }}>
-                        {quantity}
+                        {items.length}
                     </Text>
                     <View style={{ 
                         width: 30, 

@@ -15,6 +15,7 @@
 
 import firebase from '@react-native-firebase/app';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyB0orbZVLQVxho9Y7MaZxLCAQv1ew0ww8w",
     authDomain: "uber-eats-clone-react-na-b0b09.firebaseapp.com",

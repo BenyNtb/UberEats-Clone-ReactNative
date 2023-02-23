@@ -17,6 +17,7 @@ const Signup = (props: Props) => {
         }, 4000);
     };
     
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -42,6 +43,12 @@ const Signup = (props: Props) => {
             />
             <View style={styles.formContainer}>
                 <Text style={styles.title}>Sign up</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter your name"
+                    onChangeText={(name) => setName(name)}
+                    value={name}
+                />
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#5A5FBF',
+        backgroundColor: '#F7F7F7',
     },
     logo: {
         width: '80%',
@@ -150,7 +157,7 @@ const styles = StyleSheet.create({
     socialButtonText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 16,
     },
     modalContainer: {
         position: 'absolute',

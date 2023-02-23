@@ -9,12 +9,15 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { Banner } from 'react-native-paper';
 import _ from 'lodash';
 import Search from '../../screens/Search';
+import { LocalizationContext } from '../../LocalizationContext';
 
 interface RestaurantItemProps {
     restaurantData: Restaurant[];
-  }
+}
 
-  interface Restaurant {
+interface Restaurant {
+    color: ColorValue | undefined;
+    logo: string | undefined;
     review_count: any;
     name: string;
     rating: number;
@@ -23,10 +26,11 @@ interface RestaurantItemProps {
     reviews: number;
     image_url: string;
     image: any;
-  }
-  export type RootStackParamList = {
+}
+
+export type RootStackParamList = {
     RestaurantDetail: any | undefined;
-  };
+};
 
 export const localRestaurants = [
     {
@@ -99,9 +103,30 @@ export const localRestaurants = [
         rating: 4.0,
         color: "#5A5FBF"
     },
+    {
+        name: "Yelp",
+        image_url: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        logo: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        categories: [""],
+        price: "",
+        reviews: 2300,
+        rating: 4.0,
+        color: "white"
+    }
 ];
 
-
+export const yelpRestaurants = [
+    {
+        name: "Yelp",
+        image_url: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        logo: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        categories: [""],
+        price: "",
+        reviews: 2300,
+        rating: 4.0,
+        color: "white"
+    }
+];
 
 
 export default function RestaurantItems(props: RestaurantItemProps) {
@@ -109,11 +134,21 @@ export default function RestaurantItems(props: RestaurantItemProps) {
     const [visible, setVisible] = React.useState(true);
     const shuffledRecentOrders = _.shuffle(props.restaurantData);
     const shuffledFreeDelivery = _.shuffle(props.restaurantData);
-    const [locale, setLocale] = useState(Localization.locale);
+    // const [locale, setLocale] = useState(Localization.locale);
+    // i18n.fallbacks = true;
+    // i18n.translations = { en, fr };
+    // i18n.locale = locale;
+    // i18n.locale = "en";
+    const { locale, setLocale } = React.useContext(LocalizationContext);
     i18n.fallbacks = true;
     i18n.translations = { en, fr };
     i18n.locale = locale;
-    i18n.locale = "en";
+
+    const handleSwitchToFrench = () => {
+        setLocale('fr');
+    };
+
+
     return (
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 20 }}>
@@ -141,7 +176,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                             marginHorizontal: 10,
                         }}>
                             <RestaurantImage image={restaurant.image_url} />
-                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color}/>
+                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color} image={undefined}/>
                             <RestaurantInfo name={restaurant.name} rating={restaurant.rating} reviews={restaurant.review_count} />
                         </View>
                     </TouchableOpacity>
@@ -170,10 +205,10 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         />
                         <View style={{ marginLeft: 10, flex: 1 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 18, bottom: 15 }}>Giant Menu</Text>
-                            <Text style={{ color: 'gray', fontSize: 12 }}>01.16.2023</Text>
+                            <Text style={{ color: 'gray', fontSize: 12 }}>{i18n.t("Date", {date: "01.16.2023"})}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>$10.30</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
                             <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
                                 <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
@@ -198,10 +233,10 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         />
                         <View style={{ marginLeft: 10, flex: 1 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 18, bottom: 15 }}>Le Montagnard</Text>
-                            <Text style={{ color: 'gray', fontSize: 12 }}>01.12.2023</Text>
+                            <Text style={{ color: 'gray', fontSize: 12 }}>{i18n.t("Date", {date: "01.16.2023"})}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>$11.40</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
                             <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
                                 <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
@@ -226,10 +261,10 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         />
                         <View style={{ marginLeft: 10, flex: 1 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 18, bottom: 15 }}>Nacho Crunch Grilled Stuft Burrito</Text>
-                            <Text style={{ color: 'gray', fontSize: 12 }}>01.02.2023</Text>
+                            <Text style={{ color: 'gray', fontSize: 12 }}>{i18n.t("Date", {date: "01.16.2023"})}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>$14.50</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
                             <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
                                 <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
@@ -263,7 +298,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                             marginHorizontal: 10,
                         }}>
                             <RestaurantImage image={restaurant.image_url} />
-                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color}/>
+                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color} image={undefined}/>
                             <RestaurantInfo name={restaurant.name} rating={restaurant.rating} reviews={restaurant.review_count} />
                         </View>
                     </TouchableOpacity>
@@ -345,7 +380,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                             marginHorizontal: 10,
                         }}>
                             <RestaurantImage image={restaurant.image_url} />
-                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color}/>
+                            <RestaurantLogo logo={restaurant.logo} color={restaurant.color} image={undefined}/>
                             <RestaurantInfo name={restaurant.name} rating={restaurant.rating} reviews={restaurant.review_count} />
                         </View>
                     </TouchableOpacity>

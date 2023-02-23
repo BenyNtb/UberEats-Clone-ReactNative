@@ -72,10 +72,10 @@ export default function Home({navigation}: {navigation: any}) {
   return (
     <SafeAreaView style={{backgroundColor:'#F7F7F7', flex: 1}}>
       <View style={{backgroundColor: '#F7F7F7', padding: 15}}>
-        <HeaderTabs cityHandler={setCity} />
+        <HeaderTabs cityHandler={setCity} name={''} style={{ zIndex: 999 }} />
         {/* <SearchBar cityHandler={setCity}/> */}
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ zIndex: -1 }}>
         <Categories />
         <RestaurantItems  {...{restaurantData,navigation}} />
       </ScrollView>

@@ -13,6 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RadioButton } from 'react-native-paper';
 import CardActions from 'react-native-paper/lib/typescript/components/Card/CardActions'
 import BottomTabs from '../components/Home/BottomTabs'
+import { LocalizationContext } from '../LocalizationContext';
 
 
 const restaurantType = [
@@ -28,7 +29,7 @@ const restaurantType = [
     },
     {
         image: require('../assets/images/restaurantType/noodles.png'),
-        text: 'Asian',
+        text: i18n.t('Asian') ,
         selected: false
     },
     {
@@ -38,12 +39,12 @@ const restaurantType = [
     },
     {
         image: require('../assets/images/restaurantType/mexican.png'),
-        text: 'Mexican',
+        text: i18n.t('Mexican'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/vegetarian.png'),
-        text: 'Vegetarian',
+        text: i18n.t('Vegetarian'),
         selected: false
     },
     {
@@ -58,32 +59,32 @@ const restaurantType = [
     },
     {
         image: require('../assets/images/restaurantType/side.png'),
-        text: 'Chicken',
+        text: i18n.t('Chicken'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/fish.png'),
-        text: 'Fish',
+        text: i18n.t('Fish'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/breakfast.png'),
-        text: 'Breakfast',
+        text: i18n.t('Breakfast'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/salad.png'),
-        text: 'Salad',
+        text: i18n.t('Salad'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/ice_cream.png'),
-        text: 'Ice Cream',
+        text: i18n.t('IceCream'),
         selected: false
     },
     {
         image: require('../assets/images/restaurantType/beverage.png'),
-        text: 'Beverage',
+        text: i18n.t('Beverages'),
         selected: false
     },
 ];
@@ -198,6 +199,16 @@ export const localRestaurants = [
         rating: 4.5,
         color: "#00A3FF"
     },
+    {
+        name: "Yelp",
+        image_url: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        logo: "https://cdn.worldvectorlogo.com/logos/yelp-icon.svg",
+        categories: [""],
+        price: "",
+        reviews: 2300,
+        rating: 4.0,
+        color: "white"
+    }
 
 ];
 
@@ -237,11 +248,20 @@ export default function Search(props: RestaurantItemProps) {
         }
     }
     const [randomMinutes, setRandomMinutes] = useState (5 *(Math.floor(Math.random()  * 10) * 1 + 1));
-    const [locale, setLocale] = useState(Localization.locale);
+    // const [locale, setLocale] = useState(Localization.locale);
+    // i18n.fallbacks = true;
+    // i18n.translations = { en, fr };
+    // i18n.locale = locale;
+    // i18n.locale = "en";
+    const { locale, setLocale } = React.useContext(LocalizationContext);
     i18n.fallbacks = true;
     i18n.translations = { en, fr };
     i18n.locale = locale;
-    i18n.locale = "en";
+
+    const handleSwitchToFrench = () => {
+        setLocale('fr');
+    };
+
     
     return (
         
