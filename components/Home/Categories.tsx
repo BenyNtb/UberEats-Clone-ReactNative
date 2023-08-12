@@ -54,23 +54,24 @@ const handleSwitchToFrench = () => {
   setLocale('fr');
 };
 
-    return (
-      <View style={{ marginHorizontal: 20 }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('PopularCategories')}</Text>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={items}
-          renderItem={({ item }) => (
-            <View style={{backgroundColor: '#F7F7F7'}}>
+  return (
+    <View style={{ marginHorizontal: 20 }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{i18n.t('PopularCategories')}</Text>
+      <FlatList
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={items}
+        renderItem={({ item }) => (
+          <View style={{ backgroundColor: '#F7F7F7' }}>
             <View style={{ flex: 1, alignItems: 'center', margin: 10, backgroundColor: item.color, padding: 15, borderRadius: 10, width: 160, height: 100, overflow: 'hidden' }}>
               <Image source={item.image} style={{ width: 80, height: 80, top: -25, left: 50 }} />
               <Text style={{ fontSize: 18, marginTop: 5, bottom: 30, color: 'white', fontWeight: '300', justifyContent: 'flex-start', alignSelf: 'flex-start' }}>{item.text}</Text>
             </View>
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-    )
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
+
   }

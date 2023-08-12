@@ -209,8 +209,8 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         </View>
                         <View style={{ alignItems: 'flex-end' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
-                            <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
-                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
+                            <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 120, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
+                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>{i18n.t('Reorder')}</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
                             </TouchableOpacity>
                         </View>
@@ -238,7 +238,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         <View style={{ alignItems: 'flex-end' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
                             <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
-                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
+                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>{i18n.t('Reorder')}</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
                             </TouchableOpacity>
                         </View>
@@ -266,7 +266,7 @@ export default function RestaurantItems(props: RestaurantItemProps) {
                         <View style={{ alignItems: 'flex-end' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{i18n.t("Price", {price: "10.30"})}</Text>
                             <TouchableOpacity style={{ backgroundColor: '#C7F6B6', padding: 5, borderRadius: 5, flexDirection: 'row', width: 100, height: 35, alignItems: 'center', justifyContent: 'center', top: 15 }}>
-                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>Reorder</Text>
+                                <Text style={{ color: 'darkgreen', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }}>{i18n.t('Reorder')}</Text>
                                 <FontAwesome5 name="chevron-right" size={13} color="darkgreen" style={{ marginLeft: 5, alignSelf: 'center' }} />
                             </TouchableOpacity>
                         </View>

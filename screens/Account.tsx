@@ -74,7 +74,7 @@ export default function Account() {
     i18n.locale = locale;
 
     const handleSwitchToFrench = () => {
-    setLocale('fr');
+    setLocale('en');
     };
 
     
@@ -89,7 +89,7 @@ export default function Account() {
                 marginBottom: 20
             }}
             >
-                Profile
+                {i18n.t('Profile')}
             </Text>
                 {avatarAccount()}
             <Text style={{
@@ -197,7 +197,7 @@ export default function Account() {
                         style={{
                             fontSize: 17,
                             fontWeight: 'bold',
-                            marginBottom: 5,
+                            marginBottom: 55,
                             color: 'grey'
                         }}
                     >
@@ -205,20 +205,20 @@ export default function Account() {
                     </Text>
                     { locale !== 'en' ? (
                         <Button mode="contained" onPress={() => setLocale('en')}>
-                        Switch to English
+                        English
                         </Button>
                     ) : undefined }
                     { locale !== 'fr' ? (
                         <Button mode="contained" onPress={() => setLocale('fr')}>
-                        Switch to French
+                        French
                         </Button>
                     ) : undefined }
 
-                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: -15 }}/>
+                    <Divider width={0.5} style={{ marginHorizontal: -10, marginBottom: 5, marginTop: 5 }}/>
 
                 </View>
             </ScrollView>
-            <View style={{ bottom: -50, height: 300 }}>
+            <View style={{ bottom: -15, height: 300 }}>
                 <BottomTabs />
             </View>
         </View>

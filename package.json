@@ -12,7 +12,7 @@
     "@react-native-firebase/app": "^16.7.0",
     "@react-native-firebase/firestore": "^16.5.0",
     "@react-native-firebase/messaging": "^17.3.0",
-    "@react-navigation/native": "^6.1.1",
+    "@react-navigation/native": "^6.1.4",
     "@react-navigation/stack": "^6.3.10",
     "@types/i18n-js": "^3.8.4",
     "@types/react-redux": "^7.1.25",
@@ -47,7 +47,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "react-native-screens": "~3.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

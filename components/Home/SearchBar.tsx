@@ -160,7 +160,7 @@ export default function SearchBar({cityHandler} : {
                         <Ionicons name="location-sharp" size={40} color={'#5A5FBF'}/>
                     </View>
                     <GooglePlacesAutocomplete
-                        placeholder='| Search Restaurants'
+                        placeholder={i18n.t('SearchRestaurants')}
                         query={{
                         key: "AIzaSyBkfSuG-jyDRWnfC6FJqshnki840_vXdnM"
                         }}

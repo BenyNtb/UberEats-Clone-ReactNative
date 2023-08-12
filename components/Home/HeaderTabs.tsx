@@ -133,7 +133,7 @@ export default function HeaderTabs(props: any ) {
             <View style={{ backgroundColor: '#fff', width: '110%', height: '100%', borderRadius: 20, bottom: 210 }}>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <GooglePlacesAutocomplete
-                placeholder='Search Restaurants'
+                placeholder={i18n.t('SearchRestaurants')}
                 query={{
                 key: "AIzaSyBkfSuG-jyDRWnfC6FJqshnki840_vXdnM"
                 }}

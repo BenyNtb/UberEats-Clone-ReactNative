@@ -329,7 +329,7 @@ export default function Search(props: RestaurantItemProps) {
                 </View>
             </View>
             </ScrollView>
-            <BottomTabs />
+            {/* <BottomTabs /> */}
     </View>
 );    
 
